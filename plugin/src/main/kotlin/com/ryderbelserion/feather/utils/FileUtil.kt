@@ -40,6 +40,13 @@ class FileUtil {
         createWorkspace(workspace, upstream)
     }
 
+    fun commit(workspace: File) {
+        shellRun(workspace) {
+            git.gitCommand(listOf("git add *"))
+            git.gitCommand(listOf("git rebase --continue"))
+        }
+    }
+
     private fun createWorkspace(workspace: File, upstream: File) {
         workspace.delete()
         workspace.mkdirs()

@@ -1,10 +1,4 @@
 dependencyResolutionManagement {
-    versionCatalogs {
-        create("settings") {
-            from(files("gradle/settings.versions.toml"))
-        }
-    }
-
     repositories.gradlePluginPortal()
 }
 

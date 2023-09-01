@@ -1,5 +1,5 @@
 plugins {
-    id("feather.root-plugin")
+    id("root-plugin")
 
     `maven-publish`
 }

@@ -2,7 +2,8 @@ package com.ryderbelserion.feather
 
 import com.ryderbelserion.feather.patches.tasks.RebuildTask
 import com.ryderbelserion.feather.patches.tasks.PatchTask
-import com.ryderbelserion.feather.patches.v1.PatcherExtension
+import com.ryderbelserion.feather.patches.PatcherExtension
+import com.ryderbelserion.feather.patches.tasks.CommitTask
 import com.ryderbelserion.feather.utils.GitUtils
 import com.ryderbelserion.feather.webhook.WebhookTask
 import org.gradle.api.Plugin
@@ -33,17 +34,17 @@ class FeatherPlugin : Plugin<Project> {
             extension = patcher
         }
 
+        // The task that commits patches.
+        project.tasks.register<CommitTask>("commitPatches") {
+            group = "feather"
+
+            extension = patcher
+        }
+
         project.tasks.register<WebhookTask>("webhook") {
             group = "feather"
 
             extension = webhook
         }
     }
-}
-
-fun main() {
-    //val hash = shellRun("git", listOf("rev-parse", "--short", "origin/main"))
-    //val end = shellRun("git", listOf("rev-parse", "--short", "HEAD@{21.days.ago}"))
-
-    //println(Patcher().gitFormat(Patcher().gitHistory(end, hash), "ryder", "example", "\n"))
 }

@@ -7,7 +7,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 
-abstract class RebuildTask : DefaultTask() {
+abstract class CommitTask : DefaultTask() {
 
     @get:Input
     lateinit var extension: PatcherExtension
@@ -22,11 +22,8 @@ abstract class RebuildTask : DefaultTask() {
             project.rootDir
         }
 
-        val workspace = File("${directory}/${feather.plugin.workspace}")
+        val workspace = File("$directory/${feather.plugin.workspace}")
 
-        val patchDir = File("${directory}/patches")
-        if (!patchDir.exists()) patchDir.mkdirs()
-
-        FileUtil().rebuildPatches(workspace, patchDir)
+        FileUtil().commit(workspace)
     }
 }
