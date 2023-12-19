@@ -13,9 +13,9 @@ tasks {
     }
 
     shadowJar {
-        archiveBaseName.set(rootProject.name)
-
         archiveClassifier.set("")
+
+        exclude("META-INF/**")
     }
 
     publishing {
@@ -26,15 +26,14 @@ tasks {
                 version = rootProject.version.toString()
 
                 from(javaComponent)
-                artifact(sourcesJar)
             }
         }
 
         repositories {
             maven {
                 credentials {
-                    this.username = System.getenv("gradle_username")
-                    this.password = System.getenv("gradle_password")
+                    this.username = System.getenv("GRADLE_USERNAME")
+                    this.password = System.getenv("GRADLE_PASSWORD")
                 }
 
                 url = uri("https://repo.crazycrew.us/first-party/")
