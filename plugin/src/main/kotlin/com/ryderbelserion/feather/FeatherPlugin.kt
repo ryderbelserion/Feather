@@ -8,7 +8,6 @@ import com.ryderbelserion.feather.utils.GitUtils
 import com.ryderbelserion.feather.webhook.WebhookTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.register
 import task.WebhookExtension
 
 class FeatherPlugin : Plugin<Project> {
@@ -20,8 +19,14 @@ class FeatherPlugin : Plugin<Project> {
 
         val webhook = extensions.create("webhook", WebhookExtension::class.java)
 
+        project.tasks.register("applyPatches", PatchTask::class.java) {
+            group = "feather"
+
+            it.dependsOn(patcher)
+        }
+
         // The task that clones and sets up all our necessary folders for the first time.
-        project.tasks.register<PatchTask>("applyPatches") {
+        /*project.tasks.register<PatchTask>("applyPatches") {
             group = "feather"
 
             extension = patcher
@@ -45,6 +50,6 @@ class FeatherPlugin : Plugin<Project> {
             group = "feather"
 
             extension = webhook
-        }
+        }*/
     }
 }
