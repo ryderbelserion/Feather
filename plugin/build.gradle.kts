@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.shadowjar)
 }
 
+base {
+    archivesName.set(rootProject.name)
+}
+
 repositories {
     mavenCentral()
 }

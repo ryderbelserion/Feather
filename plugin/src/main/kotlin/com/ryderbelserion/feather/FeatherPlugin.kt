@@ -8,48 +8,34 @@ import com.ryderbelserion.feather.utils.GitUtils
 import com.ryderbelserion.feather.webhook.WebhookTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import task.WebhookExtension
 
 class FeatherPlugin : Plugin<Project> {
 
     override fun apply(project: Project): Unit = with(project) {
         GitUtils().checkForGit()
 
-        val patcher = extensions.create("patcher", PatcherExtension::class.java)
-
-        val webhook = extensions.create("webhook", WebhookExtension::class.java)
-
         project.tasks.register("applyPatches", PatchTask::class.java) {
             group = "feather"
 
-            it.dependsOn(patcher)
+            it.dependsOn(extensions.create("patcher", PatcherExtension::class.java))
         }
 
-        // The task that clones and sets up all our necessary folders for the first time.
-        /*project.tasks.register<PatchTask>("applyPatches") {
+        project.tasks.register("rebuildPatches", RebuildTask::class.java) {
             group = "feather"
 
-            extension = patcher
+            it.dependsOn(extensions.create("webhook", RebuildTask::class.java))
         }
 
-        // The task that rebuilds our patches onto the source code.
-        project.tasks.register<RebuildTask>("rebuildPatches") {
+        project.tasks.register("commitPatches", CommitTask::class.java) {
             group = "feather"
 
-            extension = patcher
+            it.dependsOn(extensions.create("webhook", CommitTask::class.java))
         }
 
-        // The task that commits patches.
-        project.tasks.register<CommitTask>("commitPatches") {
+        project.tasks.register("webhook", WebhookTask::class.java) {
             group = "feather"
 
-            extension = patcher
+            it.dependsOn(extensions.create("webhook", WebhookTask::class.java))
         }
-
-        project.tasks.register<WebhookTask>("webhook") {
-            group = "feather"
-
-            extension = webhook
-        }*/
     }
 }
