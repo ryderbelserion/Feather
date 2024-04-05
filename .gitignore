@@ -1,8 +1,4 @@
 .idea
 .gradle
 
-buildSrc/.gradle
-buildSrc/build
-
 plugin/build
-module/build

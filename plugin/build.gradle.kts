@@ -1,7 +1,7 @@
 plugins {
     `maven-publish`
 
-    kotlin("jvm") version "1.9.21"
+    kotlin("jvm") version "1.9.23"
 
     id("com.gradle.plugin-publish") version "1.2.1"
 
@@ -17,7 +17,7 @@ dependencies {
 
     implementation("com.lordcodes.turtle:turtle:0.9.0")
 
-    val ktor = "2.3.7"
+    val ktor = "2.3.9"
 
     implementation("io.ktor:ktor-client-core-jvm:$ktor")
     implementation("io.ktor:ktor-client-cio-jvm:$ktor")
@@ -50,29 +50,6 @@ tasks {
         archiveClassifier.set("")
 
         exclude("META-INF/**")
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("maven") {
-                groupId = rootProject.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-api"
-                version = rootProject.version.toString()
-
-                from(javaComponent)
-            }
-        }
-
-        repositories {
-            maven {
-                credentials {
-                    this.username = System.getenv("GRADLE_USERNAME")
-                    this.password = System.getenv("GRADLE_PASSWORD")
-                }
-
-                url = uri("https://repo.crazycrew.us/first-party/")
-            }
-        }
     }
 }
 
