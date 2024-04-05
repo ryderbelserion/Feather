@@ -15,7 +15,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("com.lordcodes.turtle:turtle:0.9.0")
+    api("com.lordcodes.turtle:turtle:0.9.0")
 
     val ktor = "2.3.9"
 
