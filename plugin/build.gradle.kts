@@ -1,4 +1,6 @@
 plugins {
+    `maven-publish`
+
     kotlin("jvm") version "1.9.23"
 
     id("com.gradle.plugin-publish") version "1.2.1"
@@ -53,16 +55,40 @@ tasks {
 
         exclude("META-INF/**")
     }
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = rootProject.group.toString()
+                artifactId = rootProject.name.lowercase()
+                version = rootProject.version.toString()
+
+                from(javaComponent)
+            }
+        }
+
+        repositories {
+            maven {
+                credentials {
+                    this.username = System.getenv("gradle_username")
+                    this.password = System.getenv("gradle_password")
+                }
+
+                url = uri("https://repo.crazycrew.us/releases")
+            }
+        }
+    }
 }
 
 gradlePlugin {
-    plugins {
-        create("feather") {
-            id = "featherpatcher"
-            displayName = "Feather"
-            description = "A neat little gradle plugin with anything I need."
-            implementationClass = "com.ryderbelserion.feather.FeatherPlugin"
-            version = rootProject.version
-        }
+    plugins.create("feather") {
+        id = "com.ryderbelserion.feather"
+        displayName = "feather"
+        tags.set(listOf("paper", "minecraft"))
+        website.set("https://github.com/ryderbelserion/Feather")
+        vcsUrl.set("https://github.com/ryderbelserion/Feather")
+        description = "A neat little gradle plugin with anything I need."
+        implementationClass = "com.ryderbelserion.feather.FeatherPlugin"
+        version = rootProject.version
     }
 }
