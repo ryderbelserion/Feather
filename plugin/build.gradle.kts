@@ -34,13 +34,13 @@ dependencies {
 val javaComponent: SoftwareComponent = components["java"]
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
 }
 
 tasks {
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "21"
             javaParameters = true
         }
     }
