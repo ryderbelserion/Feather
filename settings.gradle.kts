@@ -7,4 +7,4 @@ pluginManagement {
 
 rootProject.name = "Feather"
 
-include("plugin")
+include("feather-patcher", "feather-lib")

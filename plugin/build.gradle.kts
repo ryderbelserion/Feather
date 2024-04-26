@@ -1,11 +1,11 @@
-plugins {
+/*plugins {
     `maven-publish`
 
-    kotlin("jvm") version "1.9.23"
+    //kotlin("jvm") version "1.9.23"
 
     id("com.gradle.plugin-publish") version "1.2.1"
 
-    alias(libs.plugins.shadowjar)
+    //alias(libs.plugins.shadowjar)
 }
 
 base {
@@ -50,11 +50,11 @@ tasks {
         from(sourceSets.main.get().allSource)
     }
 
-    shadowJar {
-        archiveClassifier.set("")
+    //shadowJar {
+    //    archiveClassifier.set("")
 
-        exclude("META-INF/**")
-    }
+    //    exclude("META-INF/**")
+    //}
 
     publishing {
         publications {
@@ -92,3 +92,4 @@ gradlePlugin {
         version = rootProject.version
     }
 }
+ */

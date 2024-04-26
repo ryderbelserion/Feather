@@ -1,2 +1,4 @@
-[plugins]
-shadowjar = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+[libraries]
+gradle-kotlin-dsl = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version = "1.9.23" }
+gradle-publish = { group = "com.gradle.publish", name = "plugin-publish-plugin", version = "1.2.1" }
+gradle-shadow = { group = "com.github.johnrengelman", name = "shadow", version = "8.1.1" }
