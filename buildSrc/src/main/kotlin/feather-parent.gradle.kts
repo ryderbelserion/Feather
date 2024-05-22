@@ -18,7 +18,7 @@ gradlePlugin {
 
 publishing {
     repositories {
-        maven("https://repo.crazycrew.us/snapshots") {
+        maven("https://repo.crazycrew.us/releases") {
             credentials {
                 this.username = providers.gradleProperty("crazycrew.repo.username").get()
                 this.password = providers.gradleProperty("crazycrew.repo.password").get()
