@@ -36,7 +36,6 @@ publishing {
                 description.set("a gradle plugin with a slew of neat utilities")
                 url.set(repoUrl)
                 inceptionYear.set("2024")
-                artifactId = "feather-$prefix"
 
                 licenses {
                     license {
