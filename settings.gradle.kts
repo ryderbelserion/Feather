@@ -8,4 +8,4 @@ pluginManagement {
 
 rootProject.name = "Feather"
 
-include("feather-patcher", "feather-settings", "feather-core")
+include("feather-patcher", "feather-settings", "feather-logic", "feather-core")
