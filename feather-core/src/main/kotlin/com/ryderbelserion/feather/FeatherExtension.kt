@@ -1,5 +1,6 @@
 package com.ryderbelserion.feather
 
+import com.ryderbelserion.feather.enums.Repository
 import com.ryderbelserion.feather.records.VendorConfigure
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -78,6 +79,14 @@ public abstract class FeatherExtension(private val project: Project) {
     public fun repository(url: String): Unit = with(project) {
         repositories {
             maven(url)
+        }
+    }
+}
+
+public fun Project.applyRepositories() {
+    repositories {
+        Repository.entries.forEach { repo ->
+            repo.block(this, repo.url, this@applyRepositories)
         }
     }
 }

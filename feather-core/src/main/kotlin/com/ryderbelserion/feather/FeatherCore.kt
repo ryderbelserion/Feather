@@ -8,5 +8,7 @@ public class FeatherCore : Plugin<Project> {
 
     override fun apply(project: Project): Unit = with(project) {
         extensions.create<FeatherExtension>("feather", this)
+
+        applyRepositories()
     }
 }
