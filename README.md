@@ -1,2 +1,2 @@
 # Feather
-A neat little gradle plugin with anything I need.
+a gradle plugin with a slew of neat utilities

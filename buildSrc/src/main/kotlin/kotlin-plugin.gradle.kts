@@ -1,3 +1,5 @@
+import gradle.kotlin.dsl.accessors._d71484981518fd8dfd51d51ba90baf12.publishing
+
 plugins {
     kotlin("jvm")
 
@@ -9,11 +11,14 @@ repositories {
 }
 
 dependencies {
+    compileOnly(gradleKotlinDsl())
     compileOnly(gradleApi())
 }
 
 kotlin {
     jvmToolchain(21)
+
+    explicitApi()
 }
 
 tasks {
