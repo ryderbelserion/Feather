@@ -14,7 +14,7 @@ public val libs: String get() = "../gradle/libs.versions.toml"
 
 public fun Settings.includeProject(name: String) {
     includeProject(name) {
-        this.name = "${rootProject.name}-$name"
+        this.name = "${rootProject.name.lowercase()}-$name"
     }
 }
 
