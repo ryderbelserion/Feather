@@ -7,6 +7,24 @@ public fun formatLog(hash: String, message: String, project: String, organizatio
     return "[$hash](https://github.com/$organization/$project/commit/$hash) $message"
 }
 
+public fun convertList(list: List<String>, project: String, organization: String): String {
+    if (list.isEmpty()) return ""
+
+    val builder = StringBuilder()
+
+    for (line in list) {
+        val split = line.split(" ")
+
+        builder.append(formatLog(split[0], line.replace(split[0], ""), project, organization)).append("\n")
+    }
+
+    return builder.toString()
+}
+
+public fun Project.latestCommitHistory(start: String, project: String, organization: String): String {
+    return convertList(runGitCommand(listOf("log", "$start..${latestCommitHash()}", "--format=format:%h %s")).lines(), project, organization)
+}
+
 public fun Project.latestCommitHash(): String {
     return runGitCommand(listOf("rev-parse", "--short", "HEAD"))
 }
