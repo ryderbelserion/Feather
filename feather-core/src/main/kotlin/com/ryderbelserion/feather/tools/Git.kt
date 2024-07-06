@@ -15,7 +15,7 @@ public fun convertList(list: List<String>, project: String, organization: String
     for (line in list) {
         val split = line.split(" ")
 
-        builder.append(formatLog(split[0], line.replace(split[0], ""), project, organization)).append("\n")
+        builder.append(formatLog(split[0], line.replace(split[0], ""), project, organization)).append("\n").append("<br>")
     }
 
     return builder.toString()
