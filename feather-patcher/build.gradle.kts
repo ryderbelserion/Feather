@@ -7,3 +7,7 @@ gradlePlugin {
         implementationClass = "com.ryderbelserion.feather.FeatherPatcher"
     }
 }
+
+dependencies {
+    implementation("com.lordcodes.turtle:turtle:0.10.0")
+}
