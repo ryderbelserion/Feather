@@ -7,6 +7,9 @@ plugins {
     kotlin("jvm") version "2.1.20"
 }
 
+project.group = "com.ryderbelserion.feather"
+project.version = "0.1.0"
+
 repositories {
     mavenCentral()
 }
@@ -25,12 +28,18 @@ dependencies {
 }
 
 gradlePlugin {
+    website = "https://github.com/ryderbelserion/Feather"
+    vcsUrl = "https://github.com/ryderbelserion/Feather.git"
+
     plugins {
         create("feather") {
-            implementationClass = "com.ryderbelserion.feather.Feather"
             displayName = "Feather"
+            description = "Provides a set of opinionated utilities that may or may not make your life easier."
             group = "feather"
             id = "feather"
+            tags = listOf("kotlin", "utility")
+
+            implementationClass = "com.ryderbelserion.feather.Feather"
         }
     }
 }
