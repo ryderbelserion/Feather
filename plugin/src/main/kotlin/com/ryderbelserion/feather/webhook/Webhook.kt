@@ -32,7 +32,7 @@ abstract class Webhook : DefaultTask() {
     @TaskAction
     fun webhook() {
         runBlocking(Dispatchers.IO) {
-            val response = client.post(System.getenv("BUILD_URL")) {
+            val response = client.post(System.getenv("BUILD_URL")) { //todo() set up task configuration to replace this
                 headers {
                     append(HttpHeaders.ContentType, ContentType.Application.Json)
                 }
