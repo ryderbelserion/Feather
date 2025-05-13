@@ -1,4 +1,5 @@
 # Feather
+Provides a set of opinionated utilities that may or may not make your life easier.
 
 ### Usage
 ```kotlin
