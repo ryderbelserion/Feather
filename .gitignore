@@ -1,0 +1,8 @@
+### Intellij
+.kotlin/
+.idea/
+!.idea/icon.png
+
+### Gradle
+.gradle
+build/
