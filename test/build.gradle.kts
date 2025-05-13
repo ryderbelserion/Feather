@@ -35,6 +35,8 @@ kotlin {
 
 tasks {
     webhook {
+        post("insert_discord_webhook_url_here")
+
         content("This is content!")
 
         username("Ryder Belserion")
