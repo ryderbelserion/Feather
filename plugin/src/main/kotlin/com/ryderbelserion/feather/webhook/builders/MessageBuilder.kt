@@ -5,10 +5,20 @@ import com.ryderbelserion.feather.webhook.types.embeds.Embed
 
 abstract class MessageBuilder {
 
+    private var url: String = ""
+
     private var content: String = ""
     private var username: String = ""
     private var avatar: String = ""
     private val embeds: MutableList<Embed> = mutableListOf()
+
+    fun post(url: String) {
+        this.url = url
+    }
+
+    fun get(): String {
+        return url
+    }
 
     fun content(content: String) {
         this.content = content

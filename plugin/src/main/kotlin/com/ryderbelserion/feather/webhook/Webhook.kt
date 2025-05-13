@@ -32,14 +32,12 @@ abstract class Webhook : DefaultTask() {
     @TaskAction
     fun webhook() {
         runBlocking(Dispatchers.IO) {
-            val response = client.post(System.getenv("BUILD_URL")) { //todo() set up task configuration to replace this
+            val response = client.post(extension.get()) {
                 headers {
                     append(HttpHeaders.ContentType, ContentType.Application.Json)
                 }
 
                 val content = extension.build()
-
-                println(content)
 
                 setBody(content)
             }
