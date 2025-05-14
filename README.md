@@ -1,10 +1,13 @@
 # Feather
 Provides a set of opinionated utilities that may or may not make your life easier.
 
+### Features
+- Ability to send customized embeds to discord webhooks by running ./gradlew webhook
+
 ### Usage
 ```kotlin
 plugins {
-    id("feather") version "0.1.0"
+    id("com.ryderbelserion.feather.core") version "0.1.0"
 }
 
 tasks {
