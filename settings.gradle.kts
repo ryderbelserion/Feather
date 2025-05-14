@@ -4,7 +4,7 @@ pluginManagement {
         mavenCentral()
     }
 
-    includeBuild("./plugin")
+    includeBuild("./core")
 }
 
 rootProject.name = "Feather"

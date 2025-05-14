@@ -4,7 +4,7 @@ plugins {
     kotlin("plugin.serialization") version "2.1.20"
     kotlin("jvm") version "2.1.20"
 
-    id("com.ryderbelserion.feather")
+    id("com.ryderbelserion.feather.core")
 }
 
 repositories {
