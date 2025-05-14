@@ -35,7 +35,7 @@ gradlePlugin {
         create("feather") {
             displayName = "Feather"
             description = "Provides a set of opinionated utilities that may or may not make your life easier."
-            group = "feather"
+            group = "com.ryderbelserion.feather"
             id = "com.ryderbelserion.feather"
             tags = listOf("kotlin", "utility")
 
