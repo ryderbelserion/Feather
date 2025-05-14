@@ -7,7 +7,6 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.append
@@ -31,8 +30,18 @@ abstract class Webhook : DefaultTask() {
 
     @TaskAction
     fun webhook() {
+        val url = extension.get()
+
+        val isInvalid = url.isEmpty() || !url.startsWith("https://discord.com")
+
+        if (isInvalid) {
+            println("[Feather] No valid url was specified for the discord webhook, Please check what you entered.")
+
+            return
+        }
+
         runBlocking(Dispatchers.IO) {
-            val response = client.post(extension.get()) {
+            client.post(extension.get()) {
                 headers {
                     append(HttpHeaders.ContentType, ContentType.Application.Json)
                 }
@@ -41,8 +50,6 @@ abstract class Webhook : DefaultTask() {
 
                 setBody(content)
             }
-
-            println("Webhook Result: ${response.bodyAsText()}")
         }
     }
 }
