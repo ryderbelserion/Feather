@@ -17,7 +17,7 @@ abstract class MessageBuilder {
     }
 
     fun get(): String {
-        return url
+        return this.url
     }
 
     fun content(content: String) {
@@ -26,6 +26,10 @@ abstract class MessageBuilder {
 
     fun username(username: String) {
         this.username = username
+    }
+
+    fun username(): String {
+        return this.username
     }
 
     fun avatar(avatar: String) {

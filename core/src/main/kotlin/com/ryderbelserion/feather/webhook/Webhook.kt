@@ -10,6 +10,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.append
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -40,8 +41,14 @@ abstract class Webhook : DefaultTask() {
             return
         }
 
+        if (extension.username().isEmpty()) {
+            println("[Feather] The username field cannot be empty! Please use webhook#username(\"insert_username\")")
+
+            return
+        }
+
         runBlocking(Dispatchers.IO) {
-            client.post(extension.get()) {
+            val client = client.post(extension.get()) {
                 headers {
                     append(HttpHeaders.ContentType, ContentType.Application.Json)
                 }
@@ -49,6 +56,20 @@ abstract class Webhook : DefaultTask() {
                 val content = extension.build()
 
                 setBody(content)
+            }
+
+            val status = client.status
+
+            if (!status.isSuccess()) {
+                listOf(
+                    "=== === === === ===",
+                    "Response Time: ${client.responseTime}",
+                    "Request Time: ${client.requestTime}",
+                    "=== === === === ===",
+                    "Status: ${status.value}",
+                    "Description: ${status.description}",
+                    "=== === === === ==="
+                ).forEach { println("[Feather] $it") }
             }
         }
     }
