@@ -36,7 +36,7 @@ gradlePlugin {
             displayName = "Feather"
             description = "Provides a set of opinionated utilities that may or may not make your life easier."
             group = "feather"
-            id = "feather"
+            id = "com.ryderbelserion.feather"
             tags = listOf("kotlin", "utility")
 
             implementationClass = "com.ryderbelserion.feather.Feather"
