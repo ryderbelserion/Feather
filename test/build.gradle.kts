@@ -1,28 +1,18 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("plugin.serialization") version "2.1.20"
     kotlin("jvm") version "2.1.20"
 
     id("com.ryderbelserion.feather.core")
 }
+
+project.version = "0.2.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    val ktor = "3.1.3"
-
-    implementation("io.ktor","ktor-client-content-negotiation", ktor)
-    implementation("io.ktor","ktor-serialization-kotlinx-json", ktor)
-    implementation("io.ktor","ktor-client-core-jvm", ktor)
-    implementation("io.ktor","ktor-client-cio-jvm", ktor)
-
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.8.1")
-
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.10.2")
-
     implementation("com.lordcodes.turtle", "turtle", "0.10.0")
 }
 
@@ -35,21 +25,49 @@ kotlin {
     jvmToolchain(21)
 }
 
-tasks {
-    webhook {
-        post("insert_discord_webhook_url_here")
+feather {
+    rootDirectory = rootProject.rootDir.toPath()
 
-        content("This is content!")
+    discord {
+        webhook {
+            post("")
 
-        username("Ryder Belserion")
+            task("notify_snapshot")
+            group("crazycrates")
 
-        embeds {
-            embed {
-                title("This is a title")
+            username("Ryder Belserion")
 
-                description("This is a description")
+            content("This is a snapshot of ${rootProject.name}")
 
-                color("#e91e63")
+            embeds {
+                embed {
+                    title("Version Information")
+
+                    description("${project.version}-SNAPSHOT")
+
+                    color("#e91e63")
+                }
+            }
+        }
+
+        webhook {
+            post("")
+
+            task("notify_release")
+            group("crazycrates")
+
+            username("Ryder Belserion")
+
+            content("This is a release of ${rootProject.name}")
+
+            embeds {
+                embed {
+                    title("Version Information")
+
+                    description("${project.version}")
+
+                    color("#ff9300")
+                }
             }
         }
     }
