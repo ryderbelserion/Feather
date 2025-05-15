@@ -1,6 +1,7 @@
-package com.ryderbelserion.feather.webhook
+package com.ryderbelserion.feather.discord.tasks
 
-import com.ryderbelserion.feather.webhook.builders.MessageBuilder
+import com.ryderbelserion.feather.discord.DiscordExtension
+import com.ryderbelserion.feather.discord.builders.MessageBuilder
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -21,7 +22,13 @@ import org.gradle.api.tasks.TaskAction
 abstract class Webhook : DefaultTask() {
 
     @get:Input
-    lateinit var extension: MessageBuilder
+    lateinit var task: String
+
+    @get:Input
+    lateinit var extension: DiscordExtension
+
+    @get:Input
+    var taskGroup: String = "N/A"
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
@@ -30,25 +37,39 @@ abstract class Webhook : DefaultTask() {
     }
 
     @TaskAction
-    fun webhook() {
-        val url = extension.get()
+    fun execute() {
+        if (task.isEmpty()) {
+            println("[Feather] Task name cannot be empty!")
 
-        val isInvalid = url.isEmpty() || !url.startsWith("https://discord.com")
+            return
+        }
 
-        if (isInvalid) {
-            println("[Feather] No valid url was specified for the discord webhook, Please check what you entered.")
+        val extension: MessageBuilder? = this.project.extensions.getByType(DiscordExtension::class.java).webhooks[this.task]
+
+        if (extension == null) {
+            println("[Feather] Extension cannot be null!")
 
             return
         }
 
         if (extension.username().isEmpty()) {
-            println("[Feather] The username field cannot be empty! Please use webhook#username(\"insert_username\")")
+            println("[Feather] The username field cannot be empty! Please use webhook#username(\"insert_username\") for the task named $task")
+
+            return
+        }
+
+        val url = extension.get()
+
+        val isInvalid = url.isEmpty() || !url.startsWith("https://discord.com")
+
+        if (isInvalid) {
+            println("[Feather] No valid url was specified for the discord webhook named $task, Please check what you entered.")
 
             return
         }
 
         runBlocking(Dispatchers.IO) {
-            val client = client.post(extension.get()) {
+            val client = client.post(url) {
                 headers {
                     append(HttpHeaders.ContentType, ContentType.Application.Json)
                 }
@@ -68,6 +89,8 @@ abstract class Webhook : DefaultTask() {
                     "=== === === === ===",
                     "Status: ${status.value}",
                     "Description: ${status.description}",
+                    "Task Name: $task",
+                    "Group Name: $taskGroup",
                     "=== === === === ==="
                 ).forEach { println("[Feather] $it") }
             }

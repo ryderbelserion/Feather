@@ -1,8 +1,8 @@
-package com.ryderbelserion.feather.webhook.builders
+package com.ryderbelserion.feather.discord.builders.embeds
 
-import com.ryderbelserion.feather.webhook.types.embeds.Field
+import com.ryderbelserion.feather.discord.data.embeds.Field
 
-class FieldsBuilder {
+class FieldBuilder {
 
     private val fields: MutableList<Field> = mutableListOf()
 

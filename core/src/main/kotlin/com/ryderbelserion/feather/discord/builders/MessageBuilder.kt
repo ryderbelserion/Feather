@@ -1,11 +1,14 @@
-package com.ryderbelserion.feather.webhook.builders
+package com.ryderbelserion.feather.discord.builders
 
-import com.ryderbelserion.feather.webhook.types.Message
-import com.ryderbelserion.feather.webhook.types.embeds.Embed
+import com.ryderbelserion.feather.discord.builders.embeds.MultiEmbedBuilder
+import com.ryderbelserion.feather.discord.data.Message
+import com.ryderbelserion.feather.discord.data.embeds.Embed
 
-abstract class MessageBuilder {
+open class MessageBuilder {
 
     private var url: String = ""
+    private var task: String = ""
+    private var group: String = "N/A"
 
     private var content: String = ""
     private var username: String = ""
@@ -18,6 +21,22 @@ abstract class MessageBuilder {
 
     fun get(): String {
         return this.url
+    }
+
+    fun group(group: String) {
+        this.group = group
+    }
+
+    fun group(): String {
+        return this.group
+    }
+
+    fun task(task: String) {
+        this.task = task
+    }
+
+    fun task(): String {
+        return this.task
     }
 
     fun content(content: String) {
@@ -36,8 +55,8 @@ abstract class MessageBuilder {
         this.avatar = avatar
     }
 
-    fun embeds(builder: EmbedsBuilder.() -> Unit) {
-        this.embeds.addAll(EmbedsBuilder().apply(builder).build())
+    fun embeds(builder: MultiEmbedBuilder.() -> Unit) {
+        this.embeds.addAll(MultiEmbedBuilder().apply(builder).build())
     }
 
     internal fun build(): Message {

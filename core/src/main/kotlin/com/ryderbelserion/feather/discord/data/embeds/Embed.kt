@@ -1,8 +1,6 @@
-package com.ryderbelserion.feather.webhook.types.embeds
+package com.ryderbelserion.feather.discord.data.embeds
 
-import com.ryderbelserion.feather.webhook.types.components.Image
-import com.ryderbelserion.feather.webhook.types.embeds.data.Author
-import com.ryderbelserion.feather.webhook.types.embeds.data.Footer
+import com.ryderbelserion.feather.discord.data.components.Image
 import kotlinx.serialization.Serializable
 
 @Serializable

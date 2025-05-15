@@ -1,10 +1,11 @@
-package com.ryderbelserion.feather.webhook.builders
+package com.ryderbelserion.feather.discord.builders.embeds
 
-import com.ryderbelserion.feather.webhook.types.components.Image
-import com.ryderbelserion.feather.webhook.types.embeds.Embed
-import com.ryderbelserion.feather.webhook.types.embeds.Field
-import com.ryderbelserion.feather.webhook.types.embeds.data.Author
-import com.ryderbelserion.feather.webhook.types.embeds.data.Footer
+import com.ryderbelserion.feather.plugin.utils.toInt
+import com.ryderbelserion.feather.discord.data.components.Image
+import com.ryderbelserion.feather.discord.data.embeds.Embed
+import com.ryderbelserion.feather.discord.data.embeds.Field
+import com.ryderbelserion.feather.discord.data.embeds.Author
+import com.ryderbelserion.feather.discord.data.embeds.Footer
 import java.awt.Color
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -66,8 +67,8 @@ class EmbedBuilder {
         this.image = Image(url)
     }
 
-    fun fields(builder: FieldsBuilder.() -> Unit) {
-        this.fields = FieldsBuilder().apply(builder).build()
+    fun fields(builder: FieldBuilder.() -> Unit) {
+        this.fields = FieldBuilder().apply(builder).build()
     }
 
     internal fun build() = Embed(
@@ -80,12 +81,4 @@ class EmbedBuilder {
         this.footer,
         this.fields
     )
-}
-
-private fun Color.toInt(): Int {
-    val red = red shl 16 and 0xFF0000
-    val green = green shl 8 and 0x00FF00
-    val blue = blue and 0x0000FF
-
-    return red or green or blue
 }

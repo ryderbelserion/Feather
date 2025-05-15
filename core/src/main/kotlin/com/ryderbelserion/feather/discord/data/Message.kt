@@ -1,6 +1,6 @@
-package com.ryderbelserion.feather.webhook.types
+package com.ryderbelserion.feather.discord.data
 
-import com.ryderbelserion.feather.webhook.types.embeds.Embed
+import com.ryderbelserion.feather.discord.data.embeds.Embed
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

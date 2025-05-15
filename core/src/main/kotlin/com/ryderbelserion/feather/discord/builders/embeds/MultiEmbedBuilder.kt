@@ -1,8 +1,8 @@
-package com.ryderbelserion.feather.webhook.builders
+package com.ryderbelserion.feather.discord.builders.embeds
 
-import com.ryderbelserion.feather.webhook.types.embeds.Embed
+import com.ryderbelserion.feather.discord.data.embeds.Embed
 
-class EmbedsBuilder {
+class MultiEmbedBuilder {
 
     private val embeds: MutableList<Embed> = mutableListOf()
 
@@ -11,4 +11,5 @@ class EmbedsBuilder {
     }
 
     internal fun build() = this.embeds.toList()
+
 }

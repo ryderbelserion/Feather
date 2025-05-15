@@ -1,4 +1,4 @@
-package com.ryderbelserion.feather.webhook.types.embeds
+package com.ryderbelserion.feather.discord.data.embeds
 
 import kotlinx.serialization.Serializable
 
