@@ -25,9 +25,6 @@ abstract class Webhook : DefaultTask() {
     lateinit var task: String
 
     @get:Input
-    lateinit var extension: DiscordExtension
-
-    @get:Input
     var taskGroup: String = "N/A"
 
     private val client = HttpClient(CIO) {
