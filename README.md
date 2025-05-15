@@ -2,7 +2,7 @@
 Provides a set of opinionated utilities that may or may not make your life easier.
 
 ### Features
-- Ability to send customized embeds to discord webhooks by running ./gradlew webhook
+- Ability to customize and send multiple embeds to different webhooks.
 
 ### Usage
 ```kotlin
@@ -10,21 +10,49 @@ plugins {
     id("com.ryderbelserion.feather.core") version "0.1.0"
 }
 
-tasks {
-    webhook {
-        post("insert_discord_webhook_url_here")
+feather {
+    rootDirectory = rootProject.rootDir.toPath()
 
-        content("This is content!")
+    discord {
+        webhook {
+            post("")
 
-        username("Ryder Belserion")
+            task("notify_snapshot")
+            group("crazycrates")
 
-        embeds {
-            embed {
-                title("This is a title")
+            username("Ryder Belserion")
 
-                description("This is a description")
+            content("This is a snapshot of ${rootProject.name}")
 
-                color("#e91e63")
+            embeds {
+                embed {
+                    title("Version Information")
+
+                    description("${project.version}-SNAPSHOT")
+
+                    color("#e91e63")
+                }
+            }
+        }
+
+        webhook {
+            post("")
+
+            task("notify_release")
+            group("crazycrates")
+
+            username("Ryder Belserion")
+
+            content("This is a release of ${rootProject.name}")
+
+            embeds {
+                embed {
+                    title("Version Information")
+
+                    description("${project.version}")
+
+                    color("#ff9300")
+                }
             }
         }
     }
