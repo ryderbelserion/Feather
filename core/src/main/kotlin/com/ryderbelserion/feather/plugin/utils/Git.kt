@@ -32,7 +32,9 @@ class Git(val directory: Path?) {
 
     fun getCurrentBranch(): String = git(listOf("rev-parse", "--abbrev-ref", "HEAD"))
 
-    fun getCurrentCommit(): String = git(listOf("rev-parse", "--verify", "HEAD"))
+    fun getLatestCommitMessage(): String = git(listOf("log", "-1", "--pretty=%B"))
+
+    fun getCurrentCommitId(): String = git(listOf("rev-parse", "--verify", "HEAD"))
 
     fun getCommitAuthorName(): String = git(listOf("--no-pager", "show", "-s", "--format=%an"))
 

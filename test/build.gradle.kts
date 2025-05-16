@@ -36,7 +36,8 @@ kotlin {
 }
 
 tasks.register("debug") {
-    println(feather.getGit().getCurrentCommit())
+    println(feather.getGit().getCurrentCommitId())
+    println(feather.getGit().getLatestCommitMessage())
 }
 
 feather {
