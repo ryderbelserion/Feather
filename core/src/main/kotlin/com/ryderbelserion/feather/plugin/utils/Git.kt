@@ -45,14 +45,25 @@ class Git(val directory: Path?) {
 
         var item = Item(getCommitAuthorName(), avatar)
 
-        runBlocking(Dispatchers.IO) {
-            val response = client.get("https://api.github.com/search/users?q=$email") {
-                headers {
-                    append(HttpHeaders.ContentType, ContentType.Application.Json)
-                }
-            }.body<Github>()
+        runCatching {
+            runBlocking(Dispatchers.IO) {
+                val response = client.get("https://api.github.com/search/users?q=$email") {
+                    headers {
+                        append(HttpHeaders.ContentType, ContentType.Application.Json)
+                    }
+                }.body<Github>()
 
-            item = response.items[0]
+                val key = response.items.firstOrNull()
+
+                if (key != null) {
+                    item = key
+                }
+            }
+        }.onFailure {
+            listOf(
+                "Failed to fetch from Github API, Supplying default values...",
+                it.message
+            ).forEach { msg -> println("[Feather] $msg") }
         }
 
         return item

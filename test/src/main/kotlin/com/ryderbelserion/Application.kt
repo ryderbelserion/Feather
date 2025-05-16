@@ -43,7 +43,7 @@ fun main() {
                 }
             }.body<Github>()
 
-            val item = response.items[0]
+            val item = response.items.first()
 
             println(item.login)
             println(item.avatar)
