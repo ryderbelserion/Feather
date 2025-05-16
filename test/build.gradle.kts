@@ -56,6 +56,8 @@ feather {
 
             username(author)
 
+            avatar(item.avatar)
+
             content("This is a snapshot of ${rootProject.name}")
 
             embeds {

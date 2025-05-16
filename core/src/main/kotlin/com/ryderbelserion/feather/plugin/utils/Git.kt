@@ -43,21 +43,19 @@ class Git(val directory: Path?) {
     fun getGithubInformation(avatar: String = "N/A"): Item {
         val email = getCommitAuthorEmail()
 
-        return try {
-            runBlocking(Dispatchers.IO) {
-                val response = client.get("https://api.github.com/search/users?q=${email}") {
-                    headers {
-                        append(HttpHeaders.ContentType, ContentType.Application.Json)
-                    }
-                }.body<Github>()
+        var item = Item(getCommitAuthorName(), avatar)
 
-                val item = response.items[0]
+        runBlocking(Dispatchers.IO) {
+            val response = client.get("https://api.github.com/search/users?q=$email") {
+                headers {
+                    append(HttpHeaders.ContentType, ContentType.Application.Json)
+                }
+            }.body<Github>()
 
-                return@runBlocking item
-            }
-        } catch (_: Exception) {
-            return Item(getCommitAuthorName(), email, avatar)
+            item = response.items[0]
         }
+
+        return item
     }
 
     fun git(arguments: List<String>): String = command("git", arguments)

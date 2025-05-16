@@ -4,4 +4,4 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Item(@SerialName("login") val author: String, val email: String, @SerialName("avatar_url") val avatar: String)
+data class Item(@SerialName("login") val author: String, @SerialName("avatar_url") val avatar: String)
