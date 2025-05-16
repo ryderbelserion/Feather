@@ -21,6 +21,6 @@ jobs:
         run: chmod +x ./gradlew
       - name: Notify Discord
         if: success()
-        run: ./gradlew dev-build --stacktrace
+        run: ./gradlew notify_snapshot --stacktrace
         env:
           BUILD_WEBHOOK: ${{ secrets.BUILD_WEBHOOK }}

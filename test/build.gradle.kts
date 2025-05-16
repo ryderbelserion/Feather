@@ -49,7 +49,9 @@ feather {
 
     discord {
         webhook {
-            post("")
+            if (System.getenv("BUILD_WEBHOOK") != null) {
+                post(System.getenv("BUILD_WEBHOOK"))
+            }
 
             task("notify_snapshot")
             group("crazycrates")
@@ -72,7 +74,9 @@ feather {
         }
 
         webhook {
-            post("")
+            if (System.getenv("BUILD_WEBHOOK") != null) {
+                post(System.getenv("BUILD_WEBHOOK"))
+            }
 
             task("notify_release")
             group("crazycrates")
