@@ -1,18 +1,28 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    kotlin("plugin.serialization") version "2.1.20"
     kotlin("jvm") version "2.1.20"
 
     id("com.ryderbelserion.feather.core")
 }
 
-project.version = "0.2.0"
+project.version = "0.3.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    val ktor = "3.1.3"
+
+    implementation("io.ktor","ktor-client-content-negotiation", ktor)
+    implementation("io.ktor","ktor-serialization-kotlinx-json", ktor)
+    implementation("io.ktor","ktor-client-core-jvm", ktor)
+    implementation("io.ktor","ktor-client-cio-jvm", ktor)
+
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.8.1")
+
     implementation("com.lordcodes.turtle", "turtle", "0.10.0")
 }
 
@@ -25,8 +35,16 @@ kotlin {
     jvmToolchain(21)
 }
 
+tasks.register("debug") {
+    println(feather.getGit().getCurrentCommit())
+}
+
 feather {
     rootDirectory = rootProject.rootDir.toPath()
+
+    val git = getGit()
+    val item = git.getGithubInformation()
+    val author = item.author
 
     discord {
         webhook {
@@ -35,7 +53,7 @@ feather {
             task("notify_snapshot")
             group("crazycrates")
 
-            username("Ryder Belserion")
+            username(author)
 
             content("This is a snapshot of ${rootProject.name}")
 
@@ -56,7 +74,7 @@ feather {
             task("notify_release")
             group("crazycrates")
 
-            username("Ryder Belserion")
+            username(author)
 
             content("This is a release of ${rootProject.name}")
 

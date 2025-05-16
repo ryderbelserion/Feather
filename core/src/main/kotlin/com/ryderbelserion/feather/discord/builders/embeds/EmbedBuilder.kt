@@ -1,6 +1,6 @@
 package com.ryderbelserion.feather.discord.builders.embeds
 
-import com.ryderbelserion.feather.plugin.utils.toInt
+import com.ryderbelserion.feather.toInt
 import com.ryderbelserion.feather.discord.data.components.Image
 import com.ryderbelserion.feather.discord.data.embeds.Embed
 import com.ryderbelserion.feather.discord.data.embeds.Field

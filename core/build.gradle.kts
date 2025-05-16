@@ -8,7 +8,7 @@ plugins {
 }
 
 project.group = "com.ryderbelserion.feather"
-project.version = "0.2.1"
+project.version = "0.3.0"
 
 repositories {
     mavenCentral()

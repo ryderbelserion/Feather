@@ -1,4 +1,4 @@
-package com.ryderbelserion.feather.plugin.utils
+package com.ryderbelserion.feather
 
 import java.awt.Color
 
