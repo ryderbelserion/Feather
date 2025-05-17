@@ -1,7 +1,8 @@
 package com.ryderbelserion.feather.plugin.utils
 
-import com.ryderbelserion.feather.plugin.data.Github
-import com.ryderbelserion.feather.plugin.data.Item
+import com.ryderbelserion.feather.exceptions.FeatherException
+import com.ryderbelserion.feather.plugin.data.CommitData
+import com.ryderbelserion.feather.plugin.data.CommitAuthor
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
@@ -30,33 +31,25 @@ class Git(val directory: Path?) {
         }
     }
 
-    fun getCurrentBranch(): String = git(listOf("rev-parse", "--abbrev-ref", "HEAD"))
+    fun getCurrentCommitAuthorName(): String = git(listOf("--no-pager", "show", "-s", "--format=%an"))
 
-    fun getLatestCommitMessage(): String = git(listOf("log", "-1", "--pretty=%B"))
+    fun getCurrentCommitAuthorEmail(): String = git(listOf("--no-pager", "show", "-s", "--format=%ae"))
 
-    fun getCurrentCommitId(): String = git(listOf("rev-parse", "--verify", "HEAD"))
-
-    fun getCommitAuthorName(): String = git(listOf("--no-pager", "show", "-s", "--format=%an"))
-
-    fun getCommitAuthorEmail(): String = git(listOf("--no-pager", "show", "-s", "--format=%ae"))
-
-    fun getGithubInformation(avatar: String = "N/A"): Item {
-        val email = getCommitAuthorEmail()
-
-        var item = Item(getCommitAuthorName(), avatar)
+    fun getCurrentCommitAuthorData(avatar: String = "N/A"): CommitAuthor {
+        var data = getCurrentCommitAuthor().copy(avatar = avatar)
 
         runCatching {
             runBlocking(Dispatchers.IO) {
-                val response = client.get("https://api.github.com/search/users?q=$email") {
+                val response = client.get("https://api.github.com/search/users?q=${data.email}") {
                     headers {
                         append(HttpHeaders.ContentType, ContentType.Application.Json)
                     }
-                }.body<Github>()
+                }.body<CommitData>()
 
                 val key = response.items.firstOrNull()
 
                 if (key != null) {
-                    item = key
+                    data = key.copy(email = data.email)
                 }
             }
         }.onFailure {
@@ -66,21 +59,46 @@ class Git(val directory: Path?) {
             ).forEach { msg -> println("[Feather] $msg") }
         }
 
-        return item
+        return data
     }
+
+    fun getCurrentCommitAuthor(): CommitAuthor = CommitAuthor(getCurrentCommitAuthorName(), getCurrentCommitAuthorEmail())
+
+    fun getCurrentCommitHash(): String = git(listOf("rev-parse", "--verify", "HEAD"))
+
+    fun getCurrentBranch(): String = git(listOf("rev-parse", "--abbrev-ref", "HEAD"))
+
+    fun getCurrentCommit(): String = git(listOf("log", "-1", "--pretty=%B"))
 
     fun git(arguments: List<String>): String = command("git", arguments)
 
     /**
      * Runs a command using ProcessBuilder
      */
-    fun command(command: String, arguments: List<String> = listOf()): String {
+    private fun command(command: String, arguments: List<String> = listOf()): String {
         val splitter = listOf(command) + arguments
 
         val process = ProcessBuilder().directory(this.directory?.toFile()).command(splitter).start()
 
         process.waitFor(10, TimeUnit.SECONDS)
 
-        return process.inputStream.bufferedReader().use(BufferedReader::readText).trim()
+        return process.retrieveOutput()
+    }
+
+    /**
+     * Retrieve the output of the process
+     */
+    private fun Process.retrieveOutput(): String {
+        val output = inputStream.bufferedReader().use(BufferedReader::readText)
+
+        val exitCode = exitValue()
+
+        if (exitCode != 0) {
+            val text = errorStream.bufferedReader().use(BufferedReader::readText)
+
+            throw FeatherException("Failed to execute git command with code: %s", text)
+        }
+
+        return output.trim()
     }
 }

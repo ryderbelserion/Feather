@@ -36,16 +36,17 @@ kotlin {
 }
 
 tasks.register("debug") {
-    println(feather.getGit().getCurrentCommitId())
-    println(feather.getGit().getLatestCommitMessage())
+    val git = feather.getGit()
+    val data = git.getCurrentCommitAuthorData()
+
+    println("Author: ${data.author}, Avatar: ${data.avatar}, Email: ${data.email}")
 }
 
 feather {
     rootDirectory = rootProject.rootDir.toPath()
 
     val git = getGit()
-    val item = git.getGithubInformation()
-    val author = item.author
+    val data = git.getCurrentCommitAuthorData()
 
     discord {
         webhook {
@@ -56,9 +57,9 @@ feather {
             task("notify_snapshot")
             group("crazycrates")
 
-            username(author)
+            username(data.author)
 
-            avatar(item.avatar)
+            avatar(data.avatar)
 
             content("This is a snapshot of ${rootProject.name}")
 
@@ -81,7 +82,9 @@ feather {
             task("notify_release")
             group("crazycrates")
 
-            username(author)
+            username(data.author)
+
+            avatar(data.avatar)
 
             content("This is a release of ${rootProject.name}")
 
