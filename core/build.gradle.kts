@@ -1,54 +1,29 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import other.configurePlugin
 
 plugins {
     id("com.gradle.plugin-publish") version "1.3.1"
 
     kotlin("plugin.serialization") version "2.1.20"
-    kotlin("jvm") version "2.1.20"
+
+    id("kotlin-plugin")
 }
 
-project.group = "com.ryderbelserion.feather"
+project.group = "com.ryderbelserion.feather.core"
 project.version = "0.3.1"
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    val ktor = "3.1.3"
+    implementation(libs.bundles.ktor)
 
-    implementation("io.ktor","ktor-client-content-negotiation", ktor)
-    implementation("io.ktor","ktor-serialization-kotlinx-json", ktor)
-    implementation("io.ktor","ktor-client-core-jvm", ktor)
-    implementation("io.ktor","ktor-client-cio-jvm", ktor)
-
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.8.1")
-
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "1.10.2")
+    implementation(libs.coroutines)
+    implementation(libs.json)
 }
 
 gradlePlugin {
     website = "https://github.com/ryderbelserion/Feather"
     vcsUrl = "https://github.com/ryderbelserion/Feather.git"
 
-    plugins {
-        create("feather") {
-            displayName = "Feather"
-            description = "Provides a set of opinionated utilities that may or may not make your life easier."
-            group = "com.ryderbelserion.feather.core"
-            id = "com.ryderbelserion.feather.core"
-            tags = listOf("kotlin", "utility")
-
-            implementationClass = "com.ryderbelserion.feather.Feather"
-        }
+    configurePlugin("core") {
+        implementationClass = "${project.group}.FeatherCore"
+        description = "Provides a set of opinionated utilities that may or may not make your life easier."
     }
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_21)
-        javaParameters = true
-    }
-
-    jvmToolchain(21)
 }
