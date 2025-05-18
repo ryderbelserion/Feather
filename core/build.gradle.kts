@@ -23,7 +23,7 @@ gradlePlugin {
     vcsUrl = "https://github.com/ryderbelserion/Feather.git"
 
     configurePlugin("core") {
-        implementationClass = "${project.group}.FeatherCore"
+        implementationClass = "${project.group}.Feather"
         description = "Provides a set of opinionated utilities that may or may not make your life easier."
     }
 }
