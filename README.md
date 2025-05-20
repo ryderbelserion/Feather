@@ -16,7 +16,7 @@ feather {
 
     discord {
         webhook {
-            post("")
+            post("") // discord webhook
 
             task("notify_snapshot")
             group("crazycrates")
@@ -37,7 +37,7 @@ feather {
         }
 
         webhook {
-            post("")
+            post("") // discord webhook
 
             task("notify_release")
             group("crazycrates")
