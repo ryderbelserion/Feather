@@ -8,7 +8,7 @@ Provides a set of opinionated utilities that may or may not make your life easie
 ### Usage
 ```kotlin
 plugins {
-    id("com.ryderbelserion.feather.core") version "0.3.1"
+    id("com.ryderbelserion.feather.core") version "0.3.2"
 }
 
 feather {
