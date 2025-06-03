@@ -8,7 +8,7 @@ Provides a set of opinionated utilities that may or may not make your life easie
 ### Usage
 ```kotlin
 plugins {
-    id("com.ryderbelserion.feather.core") version "0.3.1"
+    id("com.ryderbelserion.feather.core") version "0.3.2"
 }
 
 feather {
@@ -16,7 +16,7 @@ feather {
 
     discord {
         webhook {
-            post("")
+            post("") // discord webhook
 
             task("notify_snapshot")
             group("crazycrates")
@@ -37,7 +37,7 @@ feather {
         }
 
         webhook {
-            post("")
+            post("") // discord webhook
 
             task("notify_release")
             group("crazycrates")
