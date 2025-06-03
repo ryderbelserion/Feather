@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    //compileOnly(gradleApi())
+    compileOnly(gradleApi())
 }
 
 kotlin {

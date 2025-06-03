@@ -2,7 +2,9 @@ package com.ryderbelserion.feather.core.plugin.utils
 
 import com.ryderbelserion.feather.core.exceptions.FeatherException
 import com.ryderbelserion.feather.core.plugin.data.CommitAuthor
-import com.ryderbelserion.feather.core.plugin.data.CommitData
+import com.ryderbelserion.feather.core.plugin.github.GithubCommit
+import com.ryderbelserion.feather.core.plugin.github.user.GithubUser
+import com.ryderbelserion.feather.core.plugin.github.user.GithubUserMinimal
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
@@ -31,45 +33,50 @@ class Git(val directory: Path?) {
         }
     }
 
+    fun getCurrentCommitAuthor(): CommitAuthor = CommitAuthor(getCurrentCommitAuthorName(), getCurrentCommitAuthorEmail())
+
     fun getCurrentCommitAuthorName(): String = git(listOf("--no-pager", "show", "-s", "--format=%an"))
 
     fun getCurrentCommitAuthorEmail(): String = git(listOf("--no-pager", "show", "-s", "--format=%ae"))
-
-    fun getCurrentCommitAuthorData(avatar: String = "N/A"): CommitAuthor {
-        var data = getCurrentCommitAuthor().copy(avatar = avatar)
-
-        runCatching {
-            runBlocking(Dispatchers.IO) {
-                val response = client.get("https://api.github.com/search/users?q=${data.email}") {
-                    headers {
-                        append(HttpHeaders.ContentType, ContentType.Application.Json)
-                    }
-                }.body<CommitData>()
-
-                val key = response.items.firstOrNull()
-
-                if (key != null) {
-                    data = key.copy(email = data.email)
-                }
-            }
-        }.onFailure {
-            listOf(
-                "Failed to fetch from Github API, Supplying default values...",
-                it.message
-            ).forEach { msg -> println("[Feather] $msg") }
-        }
-
-        return data
-    }
-
-    fun getCurrentCommitAuthor(): CommitAuthor =
-        CommitAuthor(getCurrentCommitAuthorName(), getCurrentCommitAuthorEmail())
 
     fun getCurrentCommitHash(): String = git(listOf("rev-parse", "--verify", "HEAD"))
 
     fun getCurrentBranch(): String = git(listOf("rev-parse", "--abbrev-ref", "HEAD"))
 
     fun getCurrentCommit(): String = git(listOf("log", "-1", "--pretty=%B"))
+
+    fun getGithubCommit(repository: String): GithubCommit {
+        var commit = GithubCommit("N/A", GithubUser(-1, "N/A"))
+
+        val hash = getCurrentCommitHash()
+
+        runCatching {
+            var response: GithubCommit?
+
+            runBlocking(Dispatchers.IO) {
+                response = client.get("https://api.github.com/repos/$repository/commits/$hash") {
+                    headers {
+                        append(HttpHeaders.ContentType, ContentType.Application.Json)
+
+                    }
+                }.body<GithubCommit>()
+
+                val user = client.get("https://api.github.com/user/${response.user.id}") {
+                    headers {
+                        append(HttpHeaders.ContentType, ContentType.Application.Json)
+                    }
+                }.body<GithubUserMinimal>()
+
+                commit = response
+
+                commit.user.setName(user.name)
+            }
+        }.onFailure {
+            println("Failed to retrieve data from $repository using $hash, ${it.message}")
+        }
+
+        return commit
+    }
 
     fun git(arguments: List<String>): String = command("git", arguments)
 
