@@ -8,6 +8,9 @@ plugins {
     id("kotlin-plugin")
 }
 
+project.group = "com.ryderbelserion.feather.core"
+project.version = "0.4.0"
+
 dependencies {
     implementation(libs.bundles.ktor)
 
