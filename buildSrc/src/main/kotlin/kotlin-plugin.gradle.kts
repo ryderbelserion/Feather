@@ -15,9 +15,9 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_21)
+        jvmTarget.set(JvmTarget.JVM_25)
         javaParameters = true
     }
 
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
