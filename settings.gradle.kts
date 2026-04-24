@@ -1,3 +1,3 @@
 rootProject.name = "Feather"
 
-include("core")
+includeBuild("build-logic")

@@ -9,10 +9,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    compileOnly(gradleApi())
-}
-
 kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_25)

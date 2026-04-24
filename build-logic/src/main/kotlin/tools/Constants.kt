@@ -1,4 +1,4 @@
-package other
+package tools
 
 import org.gradle.api.Action
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension

@@ -8,6 +8,5 @@ repositories {
 }
 
 dependencies {
-    // Bundled plugins
     implementation(libs.bundles.build)
 }
