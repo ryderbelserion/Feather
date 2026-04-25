@@ -8,7 +8,7 @@ fun GradlePluginDevelopmentExtension.configurePlugin(prefix: String, action: Act
     plugins.register("feather-$prefix") {
         id = "com.ryderbelserion.feather.$prefix"
         displayName = "feather $prefix"
-        tags.set(listOf("kotlin", "utility"))
+
         action.execute(this)
     }
 }

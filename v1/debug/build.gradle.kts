@@ -1,24 +1,4 @@
-plugins {
-    id("feather")
-}
-
-repositories {
-    mavenCentral()
-}
-
-tasks.register("printInformation") {
-    this.group = "feather"
-
-    val github = feather.getGit().getGithubCommit("ryderbelserion/Feather")
-
-    val user = github.user
-
-    println(user.avatar)
-    println(user.getName())
-    println(user.id)
-}
-
-feather {
+/*feather {
     val github = feather.getGit().getGithubCommit("ryderbelserion/Feather")
 
     val user = github.user
@@ -46,4 +26,4 @@ feather {
             }
         }
     }
-}
+}*/

@@ -2,6 +2,9 @@
 # Kotlin API
 kotlin-coroutines = "1.10.2"
 kotlin-json = "1.11.0"
+
+# Gradle API
+publish = "2.1.1"
 kotlin = "2.3.21"
 
 # Ktor API
@@ -12,7 +15,9 @@ ktor = "3.4.2"
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 kotlin-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-json" }
 
-# Kotlin Gradle API
+# Gradle API
+serialization = { module = "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin", version.ref = "kotlin" }
+publish = { module = "com.gradle.plugin-publish:com.gradle.plugin-publish.gradle.plugin", version.ref = "publish" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # Ktor API
@@ -24,13 +29,9 @@ ktor-cio = { module = "io.ktor:ktor-client-cio-jvm", version.ref = "ktor" }
 [bundles]
 # Gradle Dependencies
 build = [
+    "serialization",
+    "publish",
     "kotlin"
-]
-
-# Kotlin Bundle (used for shading)
-kotlin = [
-    "kotlin-coroutines",
-    "kotlin-json"
 ]
 
 # Ktor Bundle

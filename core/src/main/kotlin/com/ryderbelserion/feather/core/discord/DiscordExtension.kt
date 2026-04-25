@@ -9,6 +9,6 @@ abstract class DiscordExtension {
     fun webhook(configure: MessageBuilder.() -> Unit) {
         val builder = MessageBuilder().apply(configure)
 
-        this.webhooks.put(builder.task(), builder)
+        this.webhooks[builder.task()] = builder
     }
 }
