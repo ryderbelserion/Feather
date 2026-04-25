@@ -1,6 +1,8 @@
 name: Release Plugin
+
 on:
   workflow_dispatch:
+
   release:
     types: [ published ]
 
@@ -9,15 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-java@v5
         with:
-          distribution: temurin
-          java-version: 21
+          distribution: corretto
+          java-version: 25
+
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+
       - name: Publish
         run: ./gradlew core:publishPlugins --stacktrace
         env:
