@@ -52,6 +52,8 @@ class GitBuilder(private val workingDirectory: Path) {
             }
         }.onFailure {
             println("Failed to serialize data from $repository!, ${it.message}")
+
+            origin = GitOrigin()
         }
 
         return origin

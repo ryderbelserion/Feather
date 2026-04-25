@@ -13,5 +13,7 @@ data class GitOrigin(
 
     @SerialName("author") val user: GitUser = GitUser("N/A", 0),
 
-    @SerialName("stats") val stats: GitStat = GitStat(0, 0, 0)
+    @SerialName("stats") val stats: GitStat = GitStat(0, 0, 0),
+
+    @SerialName("html_url") val url: String = "N/A"
 )
