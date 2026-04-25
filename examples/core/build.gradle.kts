@@ -8,6 +8,58 @@ repositories {
 
 feather {
     workingDirectory = rootProject.rootDir.toPath()
+
+    val builder = feather.getBuilder()
+
+    val origin = builder.getNewestCommit(
+        "ryderbelserion",
+        "Feather",
+        "0cc39afc46e3ca836e32a6f2a083146a3335d5c7"
+    )
+
+    val commit = origin?.commit
+    val author = commit?.author
+
+    val user = origin?.user
+
+    val msg = commit?.message
+    //val sha = commit?.tree?.sha
+
+    val stats = origin?.stats
+
+    discord {
+        webhook {
+            group("feather")
+            task("webhook")
+
+            post("")
+
+            username(author?.name ?: "N/A")
+
+            avatar(user?.getAvatar() ?: "N/A")
+
+            embeds {
+                embed {
+                    title("Changelog")
+
+                    description(msg ?: "N/A")
+
+                    color("#e91e63")
+
+                    val total = stats?.total
+                    val deletions = stats?.deletions
+                    val additions = stats?.additions
+
+                    fields {
+                        field("Total Lines", total.toString(), true)
+                        field("Deletions", deletions.toString(), true)
+                        field("Additions", additions.toString(), true)
+                        field("Link", origin?.url ?: "N/A")
+                    }
+                }
+            }
+        }
+    }
 }
 
 tasks.register("print") {
@@ -19,7 +71,7 @@ tasks.register("print") {
     val origin = builder.getNewestCommit(
         "ryderbelserion",
         "Feather",
-        "5e60d5be62ec603ffb72258f2e4cd74c2b1d2f65"
+        "0cc39afc46e3ca836e32a6f2a083146a3335d5c7"
     )
 
     val commit = origin?.commit
