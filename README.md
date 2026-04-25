@@ -3,12 +3,12 @@ Provides a set of opinionated utilities that may or may not make your life easie
 
 ### Features
 - Ability to customize and send multiple embeds to different webhooks.
-- Ability to fetch information from git/github via feather#Git()
+- Ability to fetch information from git/github via feather#getBuilder()
 
 ### Usage
 ```kotlin
 plugins {
-    id("com.ryderbelserion.feather.core") version "0.4.0"
+    id("com.ryderbelserion.feather.core") version "0.5.0"
 }
 
 feather {
