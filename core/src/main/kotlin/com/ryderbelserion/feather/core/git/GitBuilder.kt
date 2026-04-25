@@ -16,7 +16,7 @@ import java.nio.file.Path
 
 class GitBuilder(private val workingDirectory: Path) {
 
-    private val utils: GitUtil = GitUtil(this.workingDirectory)
+    val utils: GitUtil = GitUtil(this.workingDirectory)
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
