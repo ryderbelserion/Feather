@@ -13,7 +13,7 @@ class GitUtil(private val workingDirectory: Path) {
 
     fun getRemoteCommitHash(): String = git(listOf("rev-parse", getRemoteBranch()))
 
-    fun getRemoteBranch(): String = git(listOf("rev-parse", "origin/HEAD"))
+    fun getRemoteBranch(): String = git(listOf("branch", "--show-current"))
 
     private fun git(arguments: List<String>): String = command(arguments)
 

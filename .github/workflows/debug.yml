@@ -22,6 +22,6 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Branch
-        run: ./gradlew branch
+        run: ./gradlew branch --stacktrace
       - name: Print
-        run: ./gradlew print
+        run: ./gradlew print --stacktrace
