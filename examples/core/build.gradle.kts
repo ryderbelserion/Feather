@@ -69,6 +69,7 @@ tasks.register("branch") {
     val git = feather.getBuilder().utils
 
     println("Branch ${git.getRemoteBranch()}")
+    println("Commit ${git.getRemoteCommitHash()}")
 }
 
 tasks.register("print") {
