@@ -62,6 +62,15 @@ feather {
     }
 }
 
+tasks.register("branch") {
+    description = "prints branch information"
+    group = "feather"
+
+    val git = feather.getBuilder().utils
+
+    println("Branch ${git.getRemoteBranch()}")
+}
+
 tasks.register("print") {
     description = "prints debug information"
     group = "feather"
