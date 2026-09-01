@@ -1,7 +1,7 @@
 package com.ryderbelserion.feather.core
 
-import com.ryderbelserion.feather.core.discord.DiscordExtension
-import com.ryderbelserion.feather.core.git.GitBuilder
+import com.ryderbelserion.feather.core.modules.webhooks.DiscordExtension
+import com.ryderbelserion.feather.core.util.git.GitBuilder
 import org.gradle.api.Project
 import java.nio.file.Path
 
