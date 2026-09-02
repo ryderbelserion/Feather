@@ -11,9 +11,9 @@ patcher {
 
     commitHash = "0878be42c6ac92d3313acdd770f5423185f5e03b"
 
-    workingDirectory = project.projectDir.toPath()
-    patchesDirectory = workingDirectory.resolve("patches")
-    targetDirectory = workingDirectory.resolve("target")
+    workingDirectory.set(projectDir)
+    patchesDirectory.set(projectDir.resolve("patches"))
+    targetDirectory.set(projectDir.resolve("target"))
 
     group = "feather"
 }

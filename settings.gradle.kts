@@ -2,11 +2,11 @@ rootProject.name = "Feather"
 
 includeBuild("build-logic")
 includeBuild("patcher")
-includeBuild("core")
+//includeBuild("core")
 
 listOf(
     "examples/patcher" to "patcher",
-    "examples/core" to "core"
+    //"examples/core" to "core"
 ).forEach {
     includeProject(it)
 }

@@ -1,5 +1,7 @@
 package com.ryderbelserion.feather.patcher.utils
 
+import org.gradle.api.file.DirectoryProperty
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.stream.Collectors
@@ -19,4 +21,12 @@ fun Path.matching(glob: String = "*"): List<Path> {
             it.isRegularFile() && matcher.matches(it.fileName)
         }.collect(Collectors.toList())
     }
+}
+
+fun DirectoryProperty.createDirectory() {
+    asFile.get().createDirectory()
+}
+
+fun File.createDirectory() {
+    mkdirs()
 }

@@ -1,27 +1,29 @@
 package com.ryderbelserion.feather.patcher
 
-import com.ryderbelserion.feather.patcher.utils.GitUtil
 import org.gradle.api.Project
-import java.nio.file.Path
+import org.gradle.api.file.DirectoryProperty
 
 abstract class FeatherPatcher(project: Project) {
 
-    // working directory
-    var workingDirectory: Path = project.rootDir.toPath()
+    // working directory i.e. root of the project.
+    abstract val workingDirectory: DirectoryProperty
 
-    // patches directory
-    var patchesDirectory: Path = workingDirectory.resolve("patches")
+    // patches directory i.e. where patches are held.
+    abstract val patchesDirectory: DirectoryProperty
 
-    // source directory i.e. where upstream patches are applied.
-    var targetDirectory: Path = workingDirectory.resolve("target")
+    // target directory i.e. where upstream is cloned before patches are applied.
+    abstract val targetDirectory: DirectoryProperty
 
     // git utils
-    val utils: GitUtil = GitUtil()
+    // val git: Git = Git(this.targetDirectory)
 
     // git repo to clone
     var targetProject = ""
 
-    // git branch to clone
+    // upstream branch from the project forking.
+    var upstreamBranch = "upstream"
+
+    // git branch of our project.
     var targetBranch = "main"
 
     // git commit hash
