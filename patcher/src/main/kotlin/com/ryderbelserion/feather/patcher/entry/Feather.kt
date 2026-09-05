@@ -25,6 +25,9 @@ abstract class Feather : Plugin<Project> {
             task.patchesDirectory.set(feather.patchesDirectory)
             task.targetDirectory.set(feather.targetDirectory)
 
+            task.url.set(feather.url)
+            task.sha.set(feather.sha)
+
             task.init()
         }
     }

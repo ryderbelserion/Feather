@@ -30,3 +30,7 @@ fun DirectoryProperty.createDirectory() {
 fun File.createDirectory() {
     mkdirs()
 }
+
+fun DirectoryProperty.toPath(): Path {
+    return asFile.get().toPath()
+}

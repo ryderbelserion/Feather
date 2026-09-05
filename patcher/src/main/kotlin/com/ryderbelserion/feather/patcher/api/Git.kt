@@ -4,9 +4,8 @@ import com.ryderbelserion.feather.patcher.api.exceptions.FeatherException
 import java.io.BufferedReader
 import java.nio.file.Path
 import java.util.concurrent.TimeUnit
-import kotlin.io.path.absolutePathString
 
-class Git(private val repo: Path) {
+class Git(private val repo: Path, private val url: String, private val sha: String) {
 
     fun getRemoteCommitMessage(hash: String, format: String): String = git("show", "-s", "--format=$format", hash)
 
@@ -21,19 +20,24 @@ class Git(private val repo: Path) {
         git("tag.gpgSign", "false")
     }
 
-    fun createUpstream(upstream: Path, upstreamBranch: String, branchName: String) {
-        git("init", "--quiet")
+    fun createUpstream(branch: String) {
+        git("clone", this.url, branch)
 
         disableGpgSigning()
 
-        git("remote", "add", upstreamBranch, upstream.absolutePathString())
+        git("branch", "-f", branch, this.sha)
+        git("checkout", branch)
 
-        git("fetch", upstreamBranch, "--prune", "--prune-tags", "--force")
+        //git("init", "--quiet")
 
-        git("checkout", branchName)
+        //git("remote", "add", upstreamBranch, upstream.absolutePathString())
 
-        git("reset", "--hard", upstreamBranch)
-        git("gc")
+        //git("fetch", upstreamBranch)
+
+        //git("checkout", branchName)
+
+        //git("reset", "--hard", "upstream/$branchName")
+        //git("gc")
     }
 
     private fun git(vararg arguments: String): String = command(*arguments)
