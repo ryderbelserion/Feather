@@ -1,9 +1,12 @@
 package com.ryderbelserion.feather.patcher.api
 
 import com.ryderbelserion.feather.patcher.api.exceptions.FeatherException
+import com.ryderbelserion.feather.patcher.utils.matching
 import java.io.BufferedReader
 import java.nio.file.Path
 import java.util.concurrent.TimeUnit
+import kotlin.io.path.absolutePathString
+import kotlin.system.exitProcess
 
 class Git(private val repo: Path, private val url: String, private val sha: String) {
 
@@ -28,6 +31,24 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
         git(true, "fetch", "origin")
 
         git(true, "reset", "--hard", this.sha)
+    }
+
+    fun applyPatches(path: Path) {
+        path.matching("*.patch").forEach {
+            val name = it.fileName.toString()
+
+            runCatching {
+                println("Applying patch $name to project!")
+
+                git(true, "am", "--3way", "--ignore-whitespace", "--reject", it.absolutePathString())
+            }.onFailure {
+                println("Failed to apply patch $name to project! Please resolve the merge conflict, and try again.")
+
+                exitProcess(1)
+            }.onSuccess {
+                println("Applied patch $name to project!")
+            }
+        }
     }
 
     private fun git(isLogging: Boolean = false, vararg arguments: String): String = command(isLogging, *arguments)

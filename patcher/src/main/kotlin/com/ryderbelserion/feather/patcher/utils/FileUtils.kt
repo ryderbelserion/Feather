@@ -19,7 +19,7 @@ fun Path.matching(glob: String = "*"): List<Path> {
     return Files.walk(this).use { stream ->
         stream.filter {
             it.isRegularFile() && matcher.matches(it.fileName)
-        }.collect(Collectors.toList())
+        }.sorted().collect(Collectors.toList())
     }
 }
 
