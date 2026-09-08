@@ -34,7 +34,7 @@ abstract class InitTask : BaseTask() {
 
         val git = Git(path, this.url.get(), this.sha.get())
 
-        git.createUpstream("upstream")
+        git.createUpstream("main")
     }
 
     @TaskAction
