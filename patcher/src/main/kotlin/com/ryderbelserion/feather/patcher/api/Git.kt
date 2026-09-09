@@ -23,14 +23,20 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
         git(false, "tag.gpgSign", "false")
     }
 
-    fun createUpstream(branch: String) {
+    fun createUpstream(branch: String, origin: String) {
         git(true, "init", "--quiet", "--initial-branch", branch)
 
-        git(false, "remote", "add", "origin", this.url)
+        git(false, "remote", "add", origin, this.url)
 
-        git(true, "fetch", "origin")
+        git(true, "fetch", origin)
 
         git(true, "reset", "--hard", this.sha)
+
+        runCatching {
+            git(false, "checkout", "-b", branch)
+        }.onFailure {
+            git(true, "checkout", branch)
+        }
     }
 
     fun applyPatches(path: Path) {
@@ -49,6 +55,10 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
                 println("Applied patch $name to project!")
             }
         }
+    }
+
+    fun savePatches(path: Path) {
+        git(true, "format-patch", "-1", "HEAD", "--quiet", "-o", path.absolutePathString())
     }
 
     private fun git(isLogging: Boolean = false, vararg arguments: String): String = command(isLogging, *arguments)

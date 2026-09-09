@@ -3,6 +3,7 @@ package com.ryderbelserion.feather.patcher.entry
 import com.ryderbelserion.feather.patcher.FeatherPatcher
 import com.ryderbelserion.feather.patcher.entry.tasks.types.ApplyTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.InitTask
+import com.ryderbelserion.feather.patcher.entry.tasks.types.SaveTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -40,6 +41,19 @@ abstract class Feather : Plugin<Project> {
         }
 
         tasks.register("apply", ApplyTask::class.java) { task ->
+            task.group = group
+
+            task.workingDirectory.set(workingDirectory)
+            task.patchesDirectory.set(patchesDirectory)
+            task.targetDirectory.set(targetDirectory)
+
+            task.url.set(url)
+            task.sha.set(sha)
+
+            task.init()
+        }
+
+        tasks.register("save", SaveTask::class.java) { task ->
             task.group = group
 
             task.workingDirectory.set(workingDirectory)

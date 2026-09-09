@@ -10,7 +10,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.TaskAction
 
-abstract class InitTask : BaseTask() {
+abstract class SaveTask : BaseTask() {
 
     @get:InputDirectory
     abstract val workingDirectory: DirectoryProperty
@@ -34,7 +34,7 @@ abstract class InitTask : BaseTask() {
 
         val git = Git(path, this.url.get(), this.sha.get())
 
-        git.createUpstream("upstream", "upstream")
+        git.savePatches(this.patchesDirectory.toPath())
     }
 
     @TaskAction
