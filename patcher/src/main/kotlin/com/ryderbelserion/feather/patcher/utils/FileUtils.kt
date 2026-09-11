@@ -34,3 +34,7 @@ fun File.createDirectory() {
 fun DirectoryProperty.toPath(): Path {
     return asFile.get().toPath()
 }
+
+fun String.asPath(path: Path): Path {
+    return path.resolve(this)
+}

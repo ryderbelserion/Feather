@@ -1,6 +1,7 @@
 package com.ryderbelserion.feather.patcher.api
 
 import com.ryderbelserion.feather.patcher.api.exceptions.FeatherException
+import com.ryderbelserion.feather.patcher.utils.asPath
 import com.ryderbelserion.feather.patcher.utils.matching
 import java.io.BufferedReader
 import java.nio.file.Path
@@ -27,48 +28,28 @@ class Git(private val parent: Path, private val url: String, private val sha: St
         git(false, "tag.gpgSign", "false")
     }
 
-    @OptIn(ExperimentalPathApi::class)
-    fun createUpstream(target: Path, branch: String, origin: String) {
-        //if (this.repo.resolve(".git").notExists()) {
-        //    this.repo.deleteRecursively()
-        //    this.repo.createDirectories()
+    fun createUpstream(target: Path, origin: String) {
+        git(target, false, "clone", this.url, origin)
 
-            //git("init", "--quiet")
-        //}
+        git(origin.asPath(target), "branch", "-f", origin, this.sha)
 
-        //git(false, "remote", "add", origin, this.url)
-
-        git(target, "clone", this.url, origin)
-
-        git("branch", "-f", origin, this.sha)
-
-        git("checkout", origin)
-
-        //git("fetch", origin)
-
-        //git("reset", "--hard", this.sha)
-
-        runCatching {
-            //git(false, "checkout", "-f", branch, this.sha)
-        }.onFailure {
-            //git("checkout", branch)
-        }
+        git(origin.asPath(target), "checkout", origin)
     }
 
     @OptIn(ExperimentalPathApi::class)
-    fun createWorkspace(target: Path, path: Path, branch: String, origin: String) {
-        if (target.resolve(".git").notExists()) {
-            target.deleteRecursively()
-            target.createDirectories()
+    fun createWorkspace(source: Path, origin: String) {
+        if (this.parent.resolve(".git").notExists()) {
+            this.parent.deleteRecursively()
+            this.parent.createDirectories()
 
             git("init", "--quiet")
         }
 
-        git(false, "remote", "add", origin, path.absolutePathString())
+        git(false, "remote", "add", origin, source.absolutePathString())
 
         git("fetch", origin)
 
-        git("reset", "--hard", branch)
+        git("reset", "--hard", origin)
     }
 
     fun applyPatches(path: Path, target: Path) {
@@ -119,7 +100,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
         //git("format-patch", "-1", "HEAD", "--quiet", "-o", path.absolutePathString())
     }
 
-    private fun git(target: Path, isLogging: Boolean, vararg arguments: String) = command(target, isLogging, *arguments)
+    private fun git(target: Path, verbose: Boolean, vararg arguments: String) = command(target, verbose, *arguments)
 
     private fun git(target: Path, vararg arguments: String) = command(target, true, *arguments)
 
@@ -139,8 +120,6 @@ class Git(private val parent: Path, private val url: String, private val sha: St
         }.onFailure {
             if (verbose) {
                 println("There was an error while checking ${this.url} using git ${arguments.contentToString()}")
-
-                it.printStackTrace()
             }
 
             return ""

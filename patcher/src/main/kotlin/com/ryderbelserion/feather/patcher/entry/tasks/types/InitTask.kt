@@ -2,6 +2,7 @@ package com.ryderbelserion.feather.patcher.entry.tasks.types
 
 import com.ryderbelserion.feather.patcher.api.Git
 import com.ryderbelserion.feather.patcher.entry.tasks.BaseTask
+import com.ryderbelserion.feather.patcher.utils.asPath
 import com.ryderbelserion.feather.patcher.utils.createDirectory
 import com.ryderbelserion.feather.patcher.utils.toPath
 import org.gradle.api.file.DirectoryProperty
@@ -35,8 +36,9 @@ abstract class InitTask : BaseTask() {
 
         val git = Git(targetDirectory, this.url.get(), this.sha.get())
 
-        git.createUpstream(workingDirectory, "main", "source")
-        //git.createWorkspace(workingDirectory, targetDirectory.resolve("source"), "main", "source")
+        git.createUpstream(workingDirectory, "source") // create source dir
+
+        git.createWorkspace("source".asPath(workingDirectory), "source") // use source dir as origin
     }
 
     @TaskAction
