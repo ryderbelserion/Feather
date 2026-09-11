@@ -71,18 +71,6 @@ class Git(private val parent: Path, private val url: String, private val sha: St
     }
 
     fun savePatches(path: Path) {
-        /*git(
-            "format-patch",
-            "--zero-commit",
-            "--full-index",
-            "--no-signature",
-            "--no-stat",
-            "--no-numbered",
-            "-1",
-            "HEAD",
-            "-N",
-            "-o", path.absolutePathString())*/
-
         git(
             "format-patch",
             "--no-stat",
@@ -91,13 +79,10 @@ class Git(private val parent: Path, private val url: String, private val sha: St
             "--no-signature",
             "--no-numbered",
             "--no-stat",
+            "--quiet",
             "-N",
             "-o", path.absolutePathString()
         )
-
-        //git("reset", "--mixed", "HEAD~1")
-
-        //git("format-patch", "-1", "HEAD", "--quiet", "-o", path.absolutePathString())
     }
 
     private fun git(target: Path, verbose: Boolean, vararg arguments: String) = command(target, verbose, *arguments)
