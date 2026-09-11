@@ -13,8 +13,6 @@ import org.gradle.api.tasks.TaskAction
 abstract class ApplyTask : BaseTask() {
 
     @get:InputDirectory
-    abstract val workingDirectory: DirectoryProperty
-    @get:InputDirectory
     abstract val patchesDirectory: DirectoryProperty
     @get:InputDirectory
     abstract val targetDirectory: DirectoryProperty
@@ -26,7 +24,6 @@ abstract class ApplyTask : BaseTask() {
     abstract val sha: Property<String>
 
     override fun init() {
-        this.workingDirectory.createDirectory()
         this.patchesDirectory.createDirectory()
         this.targetDirectory.createDirectory()
 

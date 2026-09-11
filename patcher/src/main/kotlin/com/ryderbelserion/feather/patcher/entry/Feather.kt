@@ -43,7 +43,6 @@ abstract class Feather : Plugin<Project> {
         tasks.register("apply", ApplyTask::class.java) { task ->
             task.group = group
 
-            task.workingDirectory.set(workingDirectory)
             task.patchesDirectory.set(patchesDirectory)
             task.targetDirectory.set(targetDirectory)
 
@@ -56,7 +55,6 @@ abstract class Feather : Plugin<Project> {
         tasks.register("save", SaveTask::class.java) { task ->
             task.group = group
 
-            task.workingDirectory.set(workingDirectory)
             task.patchesDirectory.set(patchesDirectory)
             task.targetDirectory.set(targetDirectory)
 
