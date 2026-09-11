@@ -12,7 +12,7 @@ import kotlin.io.path.deleteRecursively
 import kotlin.io.path.notExists
 import kotlin.system.exitProcess
 
-class Git(private val repo: Path, private val url: String, private val sha: String) {
+class Git(private val parent: Path, private val url: String, private val sha: String) {
 
     fun getRemoteCommitMessage(hash: String, format: String): String = git("show", "-s", "--format=$format", hash)
 
@@ -28,35 +28,57 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
     }
 
     @OptIn(ExperimentalPathApi::class)
-    fun createUpstream(branch: String, origin: String) {
-        if (this.repo.resolve(".git").notExists()) {
-            this.repo.deleteRecursively()
-            this.repo.createDirectories()
+    fun createUpstream(target: Path, branch: String, origin: String) {
+        //if (this.repo.resolve(".git").notExists()) {
+        //    this.repo.deleteRecursively()
+        //    this.repo.createDirectories()
+
+            //git("init", "--quiet")
+        //}
+
+        //git(false, "remote", "add", origin, this.url)
+
+        git(target, "clone", this.url, origin)
+
+        git("branch", "-f", origin, this.sha)
+
+        git("checkout", origin)
+
+        //git("fetch", origin)
+
+        //git("reset", "--hard", this.sha)
+
+        runCatching {
+            //git(false, "checkout", "-f", branch, this.sha)
+        }.onFailure {
+            //git("checkout", branch)
+        }
+    }
+
+    @OptIn(ExperimentalPathApi::class)
+    fun createWorkspace(target: Path, path: Path, branch: String, origin: String) {
+        if (target.resolve(".git").notExists()) {
+            target.deleteRecursively()
+            target.createDirectories()
 
             git("init", "--quiet")
         }
 
-        git(false, "remote", "add", origin, this.url)
+        git(false, "remote", "add", origin, path.absolutePathString())
 
         git("fetch", origin)
 
-        git("reset", "--hard", this.sha)
-
-        runCatching {
-            git(false, "checkout", "-b", branch)
-        }.onFailure {
-            git("checkout", branch)
-        }
+        git("reset", "--hard", branch)
     }
 
-    fun applyPatches(path: Path) {
+    fun applyPatches(path: Path, target: Path) {
         path.matching("*.patch").forEach {
             val name = it.fileName.toString()
 
             runCatching {
                 println("Applying patch $name to project!")
 
-                git("am", "--3way", "--ignore-whitespace", it.absolutePathString())
+                git(target, "am", "--3way", "--ignore-whitespace", it.absolutePathString())
             }.onFailure {
                 println("Failed to apply patch $name to project! Please resolve the merge conflict, and try again.")
 
@@ -68,7 +90,7 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
     }
 
     fun savePatches(path: Path) {
-        git(
+        /*git(
             "format-patch",
             "--zero-commit",
             "--full-index",
@@ -78,19 +100,35 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
             "-1",
             "HEAD",
             "-N",
-            "-o", path.absolutePathString())
+            "-o", path.absolutePathString())*/
 
-        git("reset", "--mixed", "HEAD~1")
+        git(
+            "format-patch",
+            "--no-stat",
+            "--zero-commit",
+            "--full-index",
+            "--no-signature",
+            "--no-numbered",
+            "--no-stat",
+            "-N",
+            "-o", path.absolutePathString()
+        )
+
+        //git("reset", "--mixed", "HEAD~1")
 
         //git("format-patch", "-1", "HEAD", "--quiet", "-o", path.absolutePathString())
     }
 
-    private fun git(isLogging: Boolean, vararg arguments: String): String = command(isLogging, *arguments)
+    private fun git(target: Path, isLogging: Boolean, vararg arguments: String) = command(target, isLogging, *arguments)
+
+    private fun git(target: Path, vararg arguments: String) = command(target, true, *arguments)
+
+    private fun git(verbose: Boolean, vararg arguments: String): String = git(this.parent, verbose, *arguments)
 
     private fun git(vararg arguments: String) = git(true, *arguments)
 
-    private fun command(isLogging: Boolean, vararg arguments: String): String {
-        val process = ProcessBuilder("git", *arguments).directory(this.repo.toFile())
+    private fun command(target: Path, verbose: Boolean, vararg arguments: String): String {
+        val process = ProcessBuilder("git", *arguments).directory(target.toFile())
 
         return runCatching {
             val index = process.start()
@@ -99,8 +137,10 @@ class Git(private val repo: Path, private val url: String, private val sha: Stri
 
             return index.retrieveOutput()
         }.onFailure {
-            if (isLogging) {
+            if (verbose) {
                 println("There was an error while checking ${this.url} using git ${arguments.contentToString()}")
+
+                it.printStackTrace()
             }
 
             return ""

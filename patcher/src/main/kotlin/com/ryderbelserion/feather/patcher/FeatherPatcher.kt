@@ -3,7 +3,6 @@ package com.ryderbelserion.feather.patcher
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
 
 abstract class FeatherPatcher(project: Project) {
 
@@ -13,7 +12,7 @@ abstract class FeatherPatcher(project: Project) {
     // patches directory i.e. where patches are held.
     abstract val patchesDirectory: DirectoryProperty
 
-    // target directory i.e. where upstream is cloned before patches are applied.
+    // the workspace, or target directory, a clone of the upstream with patches applied.
     abstract val targetDirectory: DirectoryProperty
 
     // the repo url
@@ -26,7 +25,7 @@ abstract class FeatherPatcher(project: Project) {
     // val git: Git = Git(this.targetDirectory)
 
     // upstream branch from the project forking.
-    //var upstreamBranch = "upstream"
+    //var upstreamBranch = "source"
 
     // git branch of our project.
     //var targetBranch = "main"

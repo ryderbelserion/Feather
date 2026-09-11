@@ -34,7 +34,7 @@ abstract class ApplyTask : BaseTask() {
 
         val git = Git(path, this.url.get(), this.sha.get())
 
-        git.applyPatches(this.patchesDirectory.toPath())
+        git.applyPatches(this.patchesDirectory.toPath(), path)
     }
 
     @TaskAction

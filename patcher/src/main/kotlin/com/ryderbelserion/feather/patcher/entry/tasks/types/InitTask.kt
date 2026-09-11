@@ -30,11 +30,13 @@ abstract class InitTask : BaseTask() {
         this.patchesDirectory.createDirectory()
         this.targetDirectory.createDirectory()
 
-        val path = this.targetDirectory.toPath()
+        val workingDirectory = this.workingDirectory.toPath()
+        val targetDirectory = this.targetDirectory.toPath()
 
-        val git = Git(path, this.url.get(), this.sha.get())
+        val git = Git(targetDirectory, this.url.get(), this.sha.get())
 
-        git.createUpstream("upstream", "upstream")
+        git.createUpstream(workingDirectory, "main", "source")
+        //git.createWorkspace(workingDirectory, targetDirectory.resolve("source"), "main", "source")
     }
 
     @TaskAction

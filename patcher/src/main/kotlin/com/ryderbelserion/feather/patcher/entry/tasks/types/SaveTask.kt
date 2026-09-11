@@ -30,9 +30,7 @@ abstract class SaveTask : BaseTask() {
         this.patchesDirectory.createDirectory()
         this.targetDirectory.createDirectory()
 
-        val path = this.targetDirectory.toPath()
-
-        val git = Git(path, this.url.get(), this.sha.get())
+        val git = Git(this.targetDirectory.toPath(), this.url.get(), this.sha.get())
 
         git.savePatches(this.patchesDirectory.toPath())
     }
