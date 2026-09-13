@@ -1,0 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ryder Belserion <contact@ryderbelserion.com>
+Date: Sat, 12 Sep 2026 21:08:07 -0400
+Subject: [PATCH] This is a message
+
+
+diff --git a/src/content/docs/index.mdx b/src/content/docs/index.mdx
+index ac71101304a269d790510c338fd0fb5f62ea51b4..61abac0b651ec19437d96e8123c4ac02c9d6a129 100644
+--- a/src/content/docs/index.mdx
++++ b/src/content/docs/index.mdx
+@@ -47,4 +47,6 @@ import { ContributorList } from "astro-contributors";
+ It's a pleasure having contributors, It's a hard and tedious task breathing life into documentation!
+ Whether you've fixed a typo, sent us feedback, pointed out something incorrect, It was all helpful.
+ 
+-<ContributorList githubRepo="Crazy-Crew/CrazyDocs" ignore={["autofix-ci[bot]", "github-actions[bot]", "renovate[bot]"]} />
+\ No newline at end of file
++<ContributorList githubRepo="Crazy-Crew/CrazyDocs" ignore={["autofix-ci[bot]", "github-actions[bot]", "renovate[bot]"]} />
++
++Gay
+\ No newline at end of file
