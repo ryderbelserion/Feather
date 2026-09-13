@@ -1,4 +1,4 @@
-package com.ryderbelserion.feather.patcher.entry.tasks.types
+package com.ryderbelserion.feather.patcher.entry.tasks.types.conflicts
 
 import com.ryderbelserion.feather.patcher.api.Git
 import com.ryderbelserion.feather.patcher.entry.tasks.BaseTask
@@ -10,10 +10,8 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.TaskAction
 
-abstract class ApplyTask : BaseTask() {
+abstract class CommitTask : BaseTask() {
 
-    @get:InputDirectory
-    abstract val patchesDirectory: DirectoryProperty
     @get:InputDirectory
     abstract val targetDirectory: DirectoryProperty
 
@@ -24,14 +22,14 @@ abstract class ApplyTask : BaseTask() {
     abstract val sha: Property<String>
 
     override fun init() {
-        this.patchesDirectory.createDirectory()
         this.targetDirectory.createDirectory()
 
         val path = this.targetDirectory.toPath()
 
         val git = Git(path, this.url.get(), this.sha.get())
 
-        git.applyPatches(this.patchesDirectory.toPath(), path)
+        git.git("add", "*")
+        git.git("rebase", "--continue")
     }
 
     @TaskAction

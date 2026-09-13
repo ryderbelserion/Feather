@@ -88,13 +88,13 @@ class Git(private val parent: Path, private val url: String, private val sha: St
         )
     }
 
-    private fun git(target: Path, verbose: Boolean, vararg arguments: String) = command(target, verbose, *arguments)
+    fun git(target: Path, verbose: Boolean, vararg arguments: String) = command(target, verbose, *arguments)
 
-    private fun git(target: Path, vararg arguments: String) = command(target, true, *arguments)
+    fun git(target: Path, vararg arguments: String) = command(target, true, *arguments)
 
-    private fun git(verbose: Boolean, vararg arguments: String): String = git(this.parent, verbose, *arguments)
+    fun git(verbose: Boolean, vararg arguments: String): String = git(this.parent, verbose, *arguments)
 
-    private fun git(vararg arguments: String) = git(true, *arguments)
+    fun git(vararg arguments: String) = git(true, *arguments)
 
     private fun command(target: Path, verbose: Boolean, vararg arguments: String): String {
         val process = ProcessBuilder("git", *arguments).directory(target.toFile())

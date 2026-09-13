@@ -42,7 +42,5 @@ abstract class InitTask : BaseTask() {
     }
 
     @TaskAction
-    fun run() {
-
-    }
+    fun run() {}
 }

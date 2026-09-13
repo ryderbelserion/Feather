@@ -4,6 +4,7 @@ import com.ryderbelserion.feather.patcher.FeatherPatcher
 import com.ryderbelserion.feather.patcher.entry.tasks.types.ApplyTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.InitTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.SaveTask
+import com.ryderbelserion.feather.patcher.entry.tasks.types.conflicts.CommitTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -56,6 +57,17 @@ abstract class Feather : Plugin<Project> {
             task.group = group
 
             task.patchesDirectory.set(patchesDirectory)
+            task.targetDirectory.set(targetDirectory)
+
+            task.url.set(url)
+            task.sha.set(sha)
+
+            task.init()
+        }
+
+        tasks.register("commit", CommitTask::class.java) { task ->
+            task.group = group
+
             task.targetDirectory.set(targetDirectory)
 
             task.url.set(url)
