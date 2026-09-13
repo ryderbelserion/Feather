@@ -6,3 +6,6 @@
 ### Gradle
 .gradle
 build/
+
+### This must be ignored.
+examples/patcher/src/source

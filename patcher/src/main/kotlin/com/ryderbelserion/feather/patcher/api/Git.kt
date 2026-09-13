@@ -23,6 +23,8 @@ class Git(private val parent: Path, private val url: String, private val sha: St
 
     fun getRemoteBranch(): String = git("branch", "--show-current")
 
+    fun getLocalBranch(): String = git("branch", "-r")
+
     fun disableGpgSigning() {
         git(false, "commit.gpgSign", "false")
         git(false, "tag.gpgSign", "false")
@@ -70,7 +72,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
         }
     }
 
-    fun savePatches(path: Path) {
+    fun savePatches(path: Path, origin: String) {
         git(
             "format-patch",
             "--no-stat",
@@ -81,7 +83,8 @@ class Git(private val parent: Path, private val url: String, private val sha: St
             "--no-stat",
             "--quiet",
             "-N",
-            "-o", path.absolutePathString()
+            "-o", path.absolutePathString(),
+            "$origin/$origin"
         )
     }
 

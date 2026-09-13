@@ -29,7 +29,7 @@ abstract class SaveTask : BaseTask() {
 
         val git = Git(this.targetDirectory.toPath(), this.url.get(), this.sha.get())
 
-        git.savePatches(this.patchesDirectory.toPath())
+        git.savePatches(this.patchesDirectory.toPath(), "source")
     }
 
     @TaskAction
