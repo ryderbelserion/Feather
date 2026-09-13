@@ -21,15 +21,6 @@ abstract class FeatherPatcher(project: Project) {
     // the repo hash
     abstract val sha: Property<String>
 
-    // git utils
-    // val git: Git = Git(this.targetDirectory)
-
-    // upstream branch from the project forking.
-    //var upstreamBranch = "source"
-
-    // git branch of our project.
-    //var targetBranch = "main"
-
     // gradle task group
     var group = "feather"
 

@@ -1,4 +1,4 @@
-package com.ryderbelserion.feather.core.util.git.objects.commit
+package com.ryderbelserion.feather.core.api.git.objects.commit
 
 import kotlinx.serialization.Serializable
 

@@ -11,16 +11,20 @@ class Feather : Plugin<Project> {
         val feather = target.extensions.create("feather", FeatherCore::class.java)
 
         target.afterEvaluate {
-            feather.discord.webhooks.forEach { id ->
-                target.tasks.register(id.value.task(), Webhook::class.java) {
-                    val taskGroup = id.value.group()
+            target.afterEvaluate(feather)
+        }
+    }
 
-                    if (taskGroup.isNotEmpty() || !taskGroup.equals("N/A", ignoreCase = true)) {
-                        it.group = taskGroup
-                    }
+    private fun Project.afterEvaluate(feather: FeatherCore) {
+        feather.discord.webhooks.forEach { id ->
+            tasks.register(id.value.task(), Webhook::class.java) {
+                val taskGroup = id.value.group()
 
-                    it.task = id.value.task()
+                if (taskGroup.isNotEmpty() || !taskGroup.equals("N/A", ignoreCase = true)) {
+                    it.group = taskGroup
                 }
+
+                it.task = id.value.task()
             }
         }
     }

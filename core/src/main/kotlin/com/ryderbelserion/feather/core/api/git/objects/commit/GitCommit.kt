@@ -1,6 +1,6 @@
-package com.ryderbelserion.feather.core.util.git.objects.commit
+package com.ryderbelserion.feather.core.api.git.objects.commit
 
-import com.ryderbelserion.feather.core.util.git.objects.commit.tree.GitTree
+import com.ryderbelserion.feather.core.api.git.objects.commit.tree.GitTree
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

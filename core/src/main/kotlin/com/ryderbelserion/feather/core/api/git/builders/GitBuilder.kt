@@ -1,6 +1,7 @@
-package com.ryderbelserion.feather.core.util.git
+package com.ryderbelserion.feather.core.api.git.builders
 
-import com.ryderbelserion.feather.core.util.git.objects.GitOrigin
+import com.ryderbelserion.feather.core.api.git.objects.GitOrigin
+import com.ryderbelserion.feather.core.api.git.Git
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
@@ -14,9 +15,9 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import java.nio.file.Path
 
-class GitBuilder(private val workingDirectory: Path) {
+class GitBuilder(private val parent: Path) {
 
-    val utils: GitUtil = GitUtil(this.workingDirectory)
+    val utils: Git = Git(this.parent)
 
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {

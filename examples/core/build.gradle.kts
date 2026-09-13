@@ -7,9 +7,9 @@ repositories {
 }
 
 feather {
-    workingDirectory = rootProject.rootDir.toPath()
+    targetDirectory = rootProject.rootDir.toPath()
 
-    val builder = feather.getBuilder()
+    val builder = feather.builder
 
     val origin = builder.getNewestCommit(
         "ryderbelserion",
@@ -66,7 +66,7 @@ tasks.register("branch") {
     description = "prints branch information"
     group = "feather"
 
-    val git = feather.getBuilder().utils
+    val git = feather.builder.utils
 
     println("Branch ${git.getRemoteBranch()}")
     println("Commit ${git.getRemoteCommitHash()}")
@@ -76,7 +76,7 @@ tasks.register("print") {
     description = "prints debug information"
     group = "feather"
 
-    val builder = feather.getBuilder()
+    val builder = feather.builder
 
     val origin = builder.getNewestCommit(
         "ryderbelserion",

@@ -5,7 +5,7 @@ import com.ryderbelserion.feather.core.modules.webhooks.data.embeds.Author
 import com.ryderbelserion.feather.core.modules.webhooks.data.embeds.Embed
 import com.ryderbelserion.feather.core.modules.webhooks.data.embeds.Field
 import com.ryderbelserion.feather.core.modules.webhooks.data.embeds.Footer
-import com.ryderbelserion.feather.core.toInt
+import com.ryderbelserion.feather.core.utils.toInt
 import java.awt.Color
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

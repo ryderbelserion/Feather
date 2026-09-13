@@ -18,6 +18,6 @@ gradlePlugin {
     configurePlugin("patcher") {
         implementationClass = "${project.group}.entry.Feather"
         description = "Provides the ability to create patch based forks."
-        tags.set(listOf("kotlin", "utility"))
+        tags.set(listOf("kotlin", "utility", "patcher"))
     }
 }
