@@ -11,5 +11,7 @@ gradlePlugin {
 tasks {
     shadowJar {
         archiveClassifier.set("")
+
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 }

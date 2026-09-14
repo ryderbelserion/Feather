@@ -2,7 +2,6 @@ package com.ryderbelserion.feather.patcher.entry.tasks.types
 
 import com.ryderbelserion.feather.patcher.api.Git
 import com.ryderbelserion.feather.patcher.entry.tasks.BaseTask
-import com.ryderbelserion.feather.patcher.utils.createDirectory
 import com.ryderbelserion.feather.patcher.utils.toPath
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
@@ -24,9 +23,6 @@ abstract class SaveTask : BaseTask() {
     abstract val sha: Property<String>
 
     override fun init() {
-        this.patchesDirectory.createDirectory()
-        this.targetDirectory.createDirectory()
-
         val git = Git(this.targetDirectory.toPath(), this.url.get(), this.sha.get())
 
         git.savePatches(this.patchesDirectory.toPath(), "source")

@@ -3,16 +3,20 @@ package com.ryderbelserion.feather.patcher
 import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.InputDirectory
 
 abstract class FeatherPatcher(project: Project) {
 
     // working directory i.e. root of the project.
+    //@get:InputDirectory
     abstract val workingDirectory: DirectoryProperty
 
     // patches directory i.e. where patches are held.
+    //@get:InputDirectory
     abstract val patchesDirectory: DirectoryProperty
 
     // the workspace, or target directory, a clone of the upstream with patches applied.
+    //@get:InputDirectory
     abstract val targetDirectory: DirectoryProperty
 
     // the repo url

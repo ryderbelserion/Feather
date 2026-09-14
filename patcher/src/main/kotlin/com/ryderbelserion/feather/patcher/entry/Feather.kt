@@ -5,6 +5,7 @@ import com.ryderbelserion.feather.patcher.entry.tasks.types.ApplyTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.StartTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.SaveTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.conflicts.CommitTask
+import com.ryderbelserion.feather.patcher.utils.createDirectory
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -24,6 +25,10 @@ abstract class Feather : Plugin<Project> {
         val workingDirectory = feather.workingDirectory
         val patchesDirectory = feather.patchesDirectory
         val targetDirectory = feather.targetDirectory
+
+        workingDirectory.createDirectory()
+        patchesDirectory.createDirectory()
+        targetDirectory.createDirectory()
 
         val sha = feather.sha
         val url = feather.url

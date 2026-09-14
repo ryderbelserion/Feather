@@ -3,7 +3,6 @@ package com.ryderbelserion.feather.patcher.entry.tasks.types
 import com.ryderbelserion.feather.patcher.api.Git
 import com.ryderbelserion.feather.patcher.entry.tasks.BaseTask
 import com.ryderbelserion.feather.patcher.utils.asPath
-import com.ryderbelserion.feather.patcher.utils.createDirectory
 import com.ryderbelserion.feather.patcher.utils.toPath
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
@@ -27,10 +26,6 @@ abstract class StartTask : BaseTask() {
     abstract val sha: Property<String>
 
     override fun init() {
-        this.workingDirectory.createDirectory()
-        this.patchesDirectory.createDirectory()
-        this.targetDirectory.createDirectory()
-
         val workingDirectory = this.workingDirectory.toPath()
         val targetDirectory = this.targetDirectory.toPath()
 

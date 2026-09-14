@@ -2,7 +2,6 @@ package com.ryderbelserion.feather.patcher.entry.tasks.types.conflicts
 
 import com.ryderbelserion.feather.patcher.api.Git
 import com.ryderbelserion.feather.patcher.entry.tasks.BaseTask
-import com.ryderbelserion.feather.patcher.utils.createDirectory
 import com.ryderbelserion.feather.patcher.utils.toPath
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
@@ -22,8 +21,6 @@ abstract class CommitTask : BaseTask() {
     abstract val sha: Property<String>
 
     override fun init() {
-        this.targetDirectory.createDirectory()
-
         val path = this.targetDirectory.toPath()
 
         val git = Git(path, this.url.get(), this.sha.get())
