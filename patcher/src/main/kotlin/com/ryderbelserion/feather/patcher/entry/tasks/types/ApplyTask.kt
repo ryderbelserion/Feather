@@ -35,5 +35,7 @@ abstract class ApplyTask : BaseTask() {
     }
 
     @TaskAction
-    fun run() {}
+    fun run() {
+        init()
+    }
 }

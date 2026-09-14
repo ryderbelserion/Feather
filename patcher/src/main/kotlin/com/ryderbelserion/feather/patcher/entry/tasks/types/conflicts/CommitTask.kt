@@ -33,5 +33,7 @@ abstract class CommitTask : BaseTask() {
     }
 
     @TaskAction
-    fun run() {}
+    fun run() {
+        init()
+    }
 }

@@ -2,6 +2,7 @@ package com.ryderbelserion.feather.core.api.git.builders
 
 import com.ryderbelserion.feather.core.api.git.objects.GitOrigin
 import com.ryderbelserion.feather.core.api.git.Git
+import com.ryderbelserion.feather.core.utils.error
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
@@ -52,7 +53,7 @@ class GitBuilder(private val parent: Path) {
                 origin = response.body<GitOrigin>()
             }
         }.onFailure {
-            println("Failed to serialize data from $repository!, ${it.message}")
+            "Failed to serialize data from $repository!, ${it.message}".error()
 
             origin = GitOrigin()
         }
@@ -68,7 +69,7 @@ class GitBuilder(private val parent: Path) {
                 client.get("https://api.github.com/repos/$organization/$repository/commits/$hash")
             }
         }.onFailure {
-            println("Failed to retrieve data from $repository using $hash, ${it.message}")
+            "Failed to retrieve data from $repository using $hash, ${it.message}".error()
 
             response = null
         }
@@ -84,7 +85,7 @@ class GitBuilder(private val parent: Path) {
                 client.get("https://api.github.com/user/$user")
             }
         }.onFailure {
-            println("Failed to retrieve data for the user $user, ${it.message}")
+            "Failed to retrieve data for the user $user, ${it.message}".error()
         }
 
         return response

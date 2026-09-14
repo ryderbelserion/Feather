@@ -2,6 +2,8 @@ package com.ryderbelserion.feather.patcher.api
 
 import com.ryderbelserion.feather.patcher.api.exceptions.FeatherException
 import com.ryderbelserion.feather.patcher.utils.asPath
+import com.ryderbelserion.feather.patcher.utils.error
+import com.ryderbelserion.feather.patcher.utils.info
 import com.ryderbelserion.feather.patcher.utils.matching
 import java.io.BufferedReader
 import java.nio.file.Path
@@ -59,15 +61,15 @@ class Git(private val parent: Path, private val url: String, private val sha: St
             val name = it.fileName.toString()
 
             runCatching {
-                println("Applying patch $name to project!")
+                "Applying patch $name to project!".info()
 
                 git(target, "am", "--3way", "--ignore-whitespace", it.absolutePathString())
             }.onFailure {
-                println("Failed to apply patch $name to project! Please resolve the merge conflict, and try again.")
+                "Failed to apply patch $name to project! Please resolve the merge conflict, and try again.".error()
 
                 exitProcess(1)
             }.onSuccess {
-                println("Applied patch $name to project!")
+                "Applied patch $name to project!".info()
             }
         }
     }
@@ -107,7 +109,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
             return index.retrieveOutput()
         }.onFailure {
             if (verbose) {
-                println("There was an error while checking ${this.url} using git ${arguments.contentToString()}")
+                "There was an error while checking ${this.url} using git ${arguments.contentToString()}".error()
             }
 
             return ""

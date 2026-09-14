@@ -2,6 +2,7 @@ package com.ryderbelserion.feather.core.modules.webhooks.tasks
 
 import com.ryderbelserion.feather.core.modules.webhooks.DiscordExtension
 import com.ryderbelserion.feather.core.modules.webhooks.builders.MessageBuilder
+import com.ryderbelserion.feather.core.utils.warn
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -36,7 +37,7 @@ abstract class Webhook : DefaultTask() {
     @TaskAction
     fun execute() {
         if (task.isEmpty()) {
-            println("[Feather] Task name cannot be empty!")
+            "Task name cannot be empty!".warn()
 
             return
         }
@@ -44,13 +45,13 @@ abstract class Webhook : DefaultTask() {
         val extension: MessageBuilder? = this.project.extensions.getByType(DiscordExtension::class.java).webhooks[this.task]
 
         if (extension == null) {
-            println("[Feather] Extension cannot be null!")
+            "Extension cannot be null!".warn()
 
             return
         }
 
         if (extension.username().isEmpty()) {
-            println("[Feather] The username field cannot be empty! Please use webhook#username(\"insert_username\") for the task named $task")
+            "The username field cannot be empty! Please use webhook#username(\"insert_username\") for the task named $task".warn()
 
             return
         }
@@ -60,7 +61,7 @@ abstract class Webhook : DefaultTask() {
         val isInvalid = url.isEmpty() || !url.startsWith("https://discord.com")
 
         if (isInvalid) {
-            println("[Feather] No valid url was specified for the discord webhook named $task, Please check what you entered.")
+            "No valid url was specified for the discord webhook named $task, Please check what you entered.".warn()
 
             return
         }
@@ -89,7 +90,7 @@ abstract class Webhook : DefaultTask() {
                     "Task Name: $task",
                     "Group Name: $taskGroup",
                     "=== === === === ==="
-                ).forEach { println("[Feather] $it") }
+                ).forEach { it.warn() }
             }
         }
     }

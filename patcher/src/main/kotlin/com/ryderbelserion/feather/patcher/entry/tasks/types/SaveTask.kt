@@ -33,5 +33,7 @@ abstract class SaveTask : BaseTask() {
     }
 
     @TaskAction
-    fun run() {}
+    fun run() {
+        init()
+    }
 }

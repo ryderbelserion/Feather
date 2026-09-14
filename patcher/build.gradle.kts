@@ -6,10 +6,11 @@ plugins {
 }
 
 project.group = "com.ryderbelserion.feather.patcher"
-project.version = "0.7.0"
+project.version = "0.8.0"
 
 dependencies {
     implementation(libs.kotlin.coroutines)
+    implementation(libs.bundles.tinylog)
     implementation(libs.bundles.ktor)
     implementation(libs.kotlin.json)
 }

@@ -66,39 +66,43 @@ tasks.register("branch") {
     description = "prints branch information"
     group = "feather"
 
-    val git = feather.builder.utils
+    doLast {
+        val git = feather.builder.utils
 
-    println("Branch ${git.getRemoteBranch()}")
-    println("Commit ${git.getRemoteCommitHash()}")
+        println("Branch ${git.getRemoteBranch()}")
+        println("Commit ${git.getRemoteCommitHash()}")
+    }
 }
 
 tasks.register("print") {
     description = "prints debug information"
     group = "feather"
 
-    val builder = feather.builder
+    doLast {
+        val builder = feather.builder
 
-    val origin = builder.getNewestCommit(
-        "ryderbelserion",
-        "Feather",
-        "0cc39afc46e3ca836e32a6f2a083146a3335d5c7"
-    )
+        val origin = builder.getNewestCommit(
+            "ryderbelserion",
+            "Feather",
+            "0cc39afc46e3ca836e32a6f2a083146a3335d5c7"
+        )
 
-    val commit = origin?.commit
-    val author = commit?.author
+        val commit = origin?.commit
+        val author = commit?.author
 
-    val user = origin?.user
+        val user = origin?.user
 
-    println("User: ${user?.name}, Id: ${user?.id}")
+        println("User: ${user?.name}, Id: ${user?.id}")
 
-    println("Author: ${author?.name}, Email: ${author?.email}, Date: ${author?.date}")
+        println("Author: ${author?.name}, Email: ${author?.email}, Date: ${author?.date}")
 
-    val msg = commit?.message
-    val sha = commit?.tree?.sha
+        val msg = commit?.message
+        val sha = commit?.tree?.sha
 
-    println("Sha: $sha, Msg: $msg")
+        println("Sha: $sha, Msg: $msg")
 
-    val stats = origin?.stats
+        val stats = origin?.stats
 
-    println("Total: ${stats?.total}, Additions: ${stats?.additions}, Deletions: ${stats?.deletions}")
+        println("Total: ${stats?.total}, Additions: ${stats?.additions}, Deletions: ${stats?.deletions}")
+    }
 }

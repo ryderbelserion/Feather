@@ -10,6 +10,12 @@ kotlin = "2.3.21"
 # Ktor API
 ktor = "3.4.2"
 
+# TinyLog API
+tinylog = "2.8.0"
+
+# Shadow API
+shadow = "9.6.1"
+
 [libraries]
 # Kotlin API
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
@@ -26,12 +32,19 @@ ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = 
 ktor-core = { module = "io.ktor:ktor-client-core-jvm", version.ref = "ktor" }
 ktor-cio = { module = "io.ktor:ktor-client-cio-jvm", version.ref = "ktor" }
 
+tinylog-api = { module = "org.tinylog:tinylog-api-kotlin", version.ref = "tinylog" }
+tinylog-impl = { module = "org.tinylog:tinylog-impl", version.ref = "tinylog" }
+
+# https://github.com/GradleUp/shadow
+shadow = { module = "com.gradleup.shadow:shadow-gradle-plugin", version.ref = "shadow" }
+
 [bundles]
 # Gradle Dependencies
 build = [
     "serialization",
     "publish",
-    "kotlin"
+    "kotlin",
+    "shadow"
 ]
 
 # Ktor Bundle
@@ -40,4 +53,9 @@ ktor = [
     "ktor-json",
     "ktor-core",
     "ktor-cio"
+]
+
+tinylog = [
+    "tinylog-impl",
+    "tinylog-api"
 ]

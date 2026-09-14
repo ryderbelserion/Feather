@@ -1,6 +1,7 @@
 package com.ryderbelserion.feather.core.api.git
 
 import com.ryderbelserion.feather.core.api.exceptions.FeatherException
+import com.ryderbelserion.feather.core.utils.error
 import java.io.BufferedReader
 import java.nio.file.Path
 import java.util.concurrent.TimeUnit
@@ -36,7 +37,7 @@ class Git(private val parent: Path) {
             return index.retrieveOutput()
         }.onFailure {
             if (verbose) {
-                println("There was an error using git ${arguments.contentToString()}")
+                "There was an error using git ${arguments.contentToString()}".error()
             }
 
             return ""
