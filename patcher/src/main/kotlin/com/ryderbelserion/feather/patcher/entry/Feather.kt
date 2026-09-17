@@ -1,8 +1,9 @@
 package com.ryderbelserion.feather.patcher.entry
 
 import com.ryderbelserion.feather.patcher.FeatherPatcher
+import com.ryderbelserion.feather.patcher.entry.tasks.CreateTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.ApplyTask
-import com.ryderbelserion.feather.patcher.entry.tasks.types.StartTask
+import com.ryderbelserion.feather.patcher.entry.tasks.types.CloneTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.SaveTask
 import com.ryderbelserion.feather.patcher.entry.tasks.types.conflicts.CommitTask
 import com.ryderbelserion.feather.patcher.utils.createDirectory
@@ -33,7 +34,15 @@ abstract class Feather : Plugin<Project> {
         val sha = feather.sha
         val url = feather.url
 
-        tasks.register("start", StartTask::class.java) { task ->
+        tasks.register("create", CreateTask::class.java) { task ->
+            task.group = group
+
+            task.workingDirectory.set(workingDirectory)
+            task.patchesDirectory.set(patchesDirectory)
+            task.targetDirectory.set(targetDirectory)
+        }
+
+        tasks.register("clone", CloneTask::class.java) { task ->
             task.group = group
 
             task.workingDirectory.set(workingDirectory)
