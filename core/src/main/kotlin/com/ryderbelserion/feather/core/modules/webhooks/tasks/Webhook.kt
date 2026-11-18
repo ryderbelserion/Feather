@@ -81,7 +81,7 @@ abstract class Webhook : DefaultTask() {
 
             val status = client.status
 
-            if (status.isSuccess()) {
+            if (!status.isSuccess()) {
                 listOf(
                     "=== === === === ===",
                     "Response Time: ${client.responseTime.toHttpDate()}",
