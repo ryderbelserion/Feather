@@ -53,7 +53,7 @@ class GitBuilder(private val parent: Path) {
                 origin = response.body<GitOrigin>()
             }
         }.onFailure {
-            "Failed to serialize data from $repository!, ${it.message}".error()
+            "Failed to serialize data from $repository!, Error: ${it.message}".error()
 
             origin = GitOrigin()
         }
@@ -69,7 +69,7 @@ class GitBuilder(private val parent: Path) {
                 client.get("https://api.github.com/repos/$organization/$repository/commits/$hash")
             }
         }.onFailure {
-            "Failed to retrieve data from $repository using $hash, ${it.message}".error()
+            "Failed to retrieve data from $repository using $hash, Error: ${it.message}".error()
 
             response = null
         }
@@ -85,7 +85,7 @@ class GitBuilder(private val parent: Path) {
                 client.get("https://api.github.com/user/$user")
             }
         }.onFailure {
-            "Failed to retrieve data for the user $user, ${it.message}".error()
+            "Failed to retrieve data for the user $user, Error: ${it.message}".error()
         }
 
         return response

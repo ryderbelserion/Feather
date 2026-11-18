@@ -37,7 +37,7 @@ class Git(private val parent: Path) {
             return index.retrieveOutput()
         }.onFailure {
             if (verbose) {
-                "There was an error using git ${arguments.contentToString()}".error()
+                "There was an error using git ${arguments.contentToString()}, Error: ${it.message}".error()
             }
 
             return ""
@@ -52,7 +52,7 @@ class Git(private val parent: Path) {
         if (exitCode != 0) {
             val text = errorStream.bufferedReader().use(BufferedReader::readText)
 
-            throw FeatherException("Failed to execute git command with code: %s", text)
+            throw FeatherException("Failed to execute git command with code: $text")
         }
 
         return output.trim()

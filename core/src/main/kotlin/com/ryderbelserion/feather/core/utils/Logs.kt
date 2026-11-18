@@ -3,13 +3,13 @@ package com.ryderbelserion.feather.core.utils
 import org.tinylog.kotlin.Logger
 
 fun String.warn() {
-    Logger.warn("[Feather] $this")
+    Logger.warn(this)
 }
 
 fun String.error() {
-    Logger.error("[Feather] $this")
+    Logger.error(this)
 }
 
 fun String.info() {
-    Logger.info("[Feather] $this")
+    Logger.info(this)
 }

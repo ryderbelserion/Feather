@@ -7,7 +7,6 @@ import java.nio.file.Path
 import java.util.stream.Collectors
 import kotlin.io.path.exists
 import kotlin.io.path.isRegularFile
-import kotlin.use
 
 fun Path.matching(glob: String = "*"): List<Path> {
     if (!exists()) {
@@ -38,3 +37,6 @@ fun DirectoryProperty.toPath(): Path {
 fun String.asPath(path: Path): Path {
     return path.resolve(this)
 }
+
+private const val LF = '\n'
+private const val CR = '\r'

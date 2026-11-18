@@ -2,6 +2,7 @@ package com.ryderbelserion.feather.core.modules.webhooks.tasks
 
 import com.ryderbelserion.feather.core.modules.webhooks.DiscordExtension
 import com.ryderbelserion.feather.core.modules.webhooks.builders.MessageBuilder
+import com.ryderbelserion.feather.core.utils.error
 import com.ryderbelserion.feather.core.utils.warn
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -90,7 +91,7 @@ abstract class Webhook : DefaultTask() {
                     "Task Name: $task",
                     "Group Name: $taskGroup",
                     "=== === === === ==="
-                ).forEach { it.warn() }
+                ).joinToString().error()
             }
         }
     }

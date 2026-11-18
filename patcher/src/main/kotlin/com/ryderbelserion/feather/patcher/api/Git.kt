@@ -65,7 +65,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
 
                 git(target, "am", "--3way", "--ignore-whitespace", it.absolutePathString())
             }.onFailure {
-                "Failed to apply patch $name to project! Please resolve the merge conflict, and try again.".error()
+                "Failed to apply patch $name to project! Please resolve the merge conflict, and try again. Error: ${it.message}".error()
 
                 exitProcess(1)
             }.onSuccess {
@@ -109,7 +109,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
             return index.retrieveOutput()
         }.onFailure {
             if (verbose) {
-                "There was an error while checking ${this.url} using git ${arguments.contentToString()}".error()
+                "There was an error while checking ${this.url} using git ${arguments.contentToString()}, Error: ${it.message}".error()
             }
 
             return ""
@@ -124,7 +124,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
         if (exitCode != 0) {
             val text = errorStream.bufferedReader().use(BufferedReader::readText)
 
-            throw FeatherException("Failed to execute git command with code: %s", text)
+            throw FeatherException("Failed to execute git command with code: $text")
         }
 
         return output.trim()
