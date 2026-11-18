@@ -14,6 +14,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.append
 import io.ktor.http.isSuccess
+import io.ktor.http.toHttpDate
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -80,18 +81,18 @@ abstract class Webhook : DefaultTask() {
 
             val status = client.status
 
-            if (!status.isSuccess()) {
+            if (status.isSuccess()) {
                 listOf(
                     "=== === === === ===",
-                    "Response Time: ${client.responseTime}",
-                    "Request Time: ${client.requestTime}",
+                    "Response Time: ${client.responseTime.toHttpDate()}",
+                    "Request Time: ${client.requestTime.toHttpDate()}",
                     "=== === === === ===",
                     "Status: ${status.value}",
                     "Description: ${status.description}",
                     "Task Name: $task",
                     "Group Name: $taskGroup",
                     "=== === === === ==="
-                ).joinToString().error()
+                ).forEach { it.error() }
             }
         }
     }
