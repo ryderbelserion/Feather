@@ -6,7 +6,7 @@ plugins {
 }
 
 project.group = "com.ryderbelserion.feather.core"
-project.version = "0.8.5"
+project.version = "0.9.0"
 
 dependencies {
     implementation(libs.kotlin.coroutines)
