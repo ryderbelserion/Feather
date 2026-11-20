@@ -32,6 +32,8 @@ feather {
             group("feather")
             task("webhook")
 
+            isEnabled(true)
+
             post("")
 
             username(author?.name ?: "N/A")

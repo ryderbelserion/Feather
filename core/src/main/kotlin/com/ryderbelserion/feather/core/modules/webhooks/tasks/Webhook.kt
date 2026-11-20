@@ -68,6 +68,10 @@ abstract class Webhook : DefaultTask() {
             return
         }
 
+        if (!extension.isEnabled()) {
+            return
+        }
+
         runBlocking(Dispatchers.IO) {
             val client = client.post(url) {
                 headers {

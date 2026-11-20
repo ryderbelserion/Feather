@@ -6,6 +6,7 @@ import com.ryderbelserion.feather.core.modules.webhooks.data.embeds.Embed
 
 open class MessageBuilder {
 
+    private var isEnabled: Boolean = true
     private var url: String = ""
     private var task: String = ""
     private var group: String = "N/A"
@@ -14,6 +15,14 @@ open class MessageBuilder {
     private var username: String = ""
     private var avatar: String = ""
     private val embeds: MutableList<Embed> = mutableListOf()
+
+    fun isEnabled(): Boolean {
+        return isEnabled
+    }
+
+    fun isEnabled(isEnabled: Boolean) {
+        this.isEnabled = isEnabled
+    }
 
     fun post(url: String) {
         this.url = url
