@@ -25,7 +25,7 @@ abstract class ApplyTask : BaseTask() {
     override fun init() {
         val path = this.targetDirectory.toPath()
 
-        val git = Git(path, this.url.get(), this.sha.get())
+        val git = Git(project.providers, path, this.url.get(), this.sha.get())
 
         git.applyPatches(this.patchesDirectory.toPath(), path)
     }

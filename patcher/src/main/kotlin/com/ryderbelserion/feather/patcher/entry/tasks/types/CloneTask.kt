@@ -29,7 +29,7 @@ abstract class CloneTask : BaseTask() {
         val workingDirectory = this.workingDirectory.toPath()
         val targetDirectory = this.targetDirectory.toPath()
 
-        val git = Git(targetDirectory, this.url.get(), this.sha.get())
+        val git = Git(project.providers, targetDirectory, this.url.get(), this.sha.get())
 
         git.createUpstream(workingDirectory, "source") // create source dir
 

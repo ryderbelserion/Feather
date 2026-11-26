@@ -5,6 +5,7 @@ import com.ryderbelserion.feather.patcher.utils.asPath
 import com.ryderbelserion.feather.patcher.utils.error
 import com.ryderbelserion.feather.patcher.utils.info
 import com.ryderbelserion.feather.patcher.utils.matching
+import org.gradle.api.provider.ProviderFactory
 import java.io.BufferedReader
 import java.nio.file.Path
 import java.util.concurrent.TimeUnit
@@ -15,7 +16,7 @@ import kotlin.io.path.deleteRecursively
 import kotlin.io.path.notExists
 import kotlin.system.exitProcess
 
-class Git(private val parent: Path, private val url: String, private val sha: String) {
+class Git(private val providers: ProviderFactory, private val parent: Path, private val url: String, private val sha: String) {
 
     fun getRemoteCommitMessage(hash: String, format: String): String = git("show", "-s", "--format=$format", hash)
 
@@ -99,7 +100,23 @@ class Git(private val parent: Path, private val url: String, private val sha: St
     fun git(vararg arguments: String) = git(true, *arguments)
 
     private fun command(target: Path, verbose: Boolean, vararg arguments: String): String {
-        val process = ProcessBuilder("git", *arguments).directory(target.toFile())
+        return runCatching {
+            this.providers.exec { index ->
+                index.commandLine("git", *arguments)
+
+                index.workingDir(target.toFile())
+
+                index.isIgnoreExitValue = true
+            }.standardOutput.asText.get()
+        }.getOrElse {
+            if (verbose) {
+                "There was an error while checking ${this.url} using git ${arguments.contentToString()}, Error: ${it.message}".error()
+            }
+
+            ""
+        }
+
+        /*val process = ProcessBuilder("git", *arguments).directory(target.toFile())
 
         return runCatching {
             val index = process.start()
@@ -113,7 +130,7 @@ class Git(private val parent: Path, private val url: String, private val sha: St
             }
 
             return ""
-        }.toString()
+        }.toString()*/
     }
 
     private fun Process.retrieveOutput(): String {

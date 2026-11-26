@@ -23,7 +23,7 @@ abstract class SaveTask : BaseTask() {
     abstract val sha: Property<String>
 
     override fun init() {
-        val git = Git(this.targetDirectory.toPath(), this.url.get(), this.sha.get())
+        val git = Git(project.providers, this.targetDirectory.toPath(), this.url.get(), this.sha.get())
 
         git.savePatches(this.patchesDirectory.toPath(), "source")
     }
