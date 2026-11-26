@@ -12,6 +12,6 @@ tasks {
     shadowJar {
         archiveClassifier.set("")
 
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 }

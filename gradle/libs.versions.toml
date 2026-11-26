@@ -8,7 +8,7 @@ publish = "2.2.1"
 kotlin = "2.4.21"
 
 # Ktor API
-ktor = "3.6.1"
+ktor = "3.4.2"
 
 # TinyLog API
 tinylog = "2.8.1"
@@ -31,6 +31,7 @@ ktor-content = { module = "io.ktor:ktor-client-content-negotiation", version.ref
 ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-core = { module = "io.ktor:ktor-client-core-jvm", version.ref = "ktor" }
 ktor-cio = { module = "io.ktor:ktor-client-cio-jvm", version.ref = "ktor" }
+ktor-bom = { module = "io.ktor:ktor-bom", version.ref = "ktor" }
 
 tinylog-api = { module = "org.tinylog:tinylog-api-kotlin", version.ref = "tinylog" }
 tinylog-impl = { module = "org.tinylog:tinylog-impl", version.ref = "tinylog" }

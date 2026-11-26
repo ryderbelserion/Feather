@@ -9,6 +9,8 @@ project.group = "com.ryderbelserion.feather.core"
 project.version = "0.10.0"
 
 dependencies {
+    implementation(platform(libs.ktor.bom))
+
     implementation(libs.kotlin.coroutines)
     implementation(libs.bundles.tinylog)
     implementation(libs.bundles.ktor)
